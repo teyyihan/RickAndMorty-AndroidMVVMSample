@@ -20,17 +20,17 @@ import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.teyyihan.rickandmorty.api.GithubService
-import com.teyyihan.rickandmorty.db.RepoDatabase
+import com.teyyihan.rickandmorty.api.RickAndMortyAPI
+import com.teyyihan.rickandmorty.db.MainDatabase
 import com.teyyihan.rickandmorty.model.CharacterModel
 import kotlinx.coroutines.flow.Flow
 
 /**
  * Repository class that works with local and remote data sources.
  */
-class GithubRepository(
-    private val service: GithubService,
-    private val database: RepoDatabase
+class CharacterRepository(
+    private val service: RickAndMortyAPI,
+    private val database: MainDatabase
 ) {
 
     /**
@@ -42,11 +42,11 @@ class GithubRepository(
 
         // appending '%' so we can allow other characters to be before and after the query string
         val dbQuery = "%${query.replace(' ', '%')}%"
-        val pagingSourceFactory = { database.reposDao().reposByName() }
+        val pagingSourceFactory = { database.charactersDao().reposByName() }
 
         val pager = Pager(
                 config = PagingConfig(pageSize = NETWORK_PAGE_SIZE),
-                remoteMediator = GithubRemoteMediator(
+                remoteMediator = CharacterRemoteMediator(
                         query,
                         service,
                         database
@@ -54,12 +54,11 @@ class GithubRepository(
                 pagingSourceFactory = pagingSourceFactory
         ).flow
 
-        println("teooooo pager "+pager)
 
         return pager
     }
 
     companion object {
-        private const val NETWORK_PAGE_SIZE = 50
+        private const val NETWORK_PAGE_SIZE = 20
     }
 }

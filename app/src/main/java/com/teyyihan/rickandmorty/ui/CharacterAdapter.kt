@@ -25,21 +25,18 @@ import com.teyyihan.rickandmorty.model.CharacterModel
 /**
  * Adapter for the list of repositories.
  */
-class ReposAdapter : PagingDataAdapter<CharacterModel, ViewHolder>(UIMODEL_COMPARATOR) {
+class CharacterAdapter : PagingDataAdapter<CharacterModel, ViewHolder>(UIMODEL_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        println("teoooooo geldi oncreate")
-        return RepoViewHolder.create(parent)
+        return CharacterViewHolder.create(parent)
 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        println("teoooooo geldi onbind")
-
         val uiModel = getItem(position)
         uiModel.let {
 
-         (holder as RepoViewHolder).bind(uiModel)
+         (holder as CharacterViewHolder).bind(uiModel)
 
         }
     }

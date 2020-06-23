@@ -18,17 +18,17 @@ package com.teyyihan.rickandmorty.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.teyyihan.rickandmorty.data.GithubRepository
+import com.teyyihan.rickandmorty.data.CharacterRepository
 
 /**
  * Factory for ViewModels
  */
-class ViewModelFactory(private val repository: GithubRepository) : ViewModelProvider.Factory {
+class ViewModelFactory(private val repository: CharacterRepository) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(SearchRepositoriesViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(MainActivityViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return SearchRepositoriesViewModel(repository) as T
+            return MainActivityViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

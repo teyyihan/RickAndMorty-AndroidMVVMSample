@@ -27,16 +27,16 @@ import com.teyyihan.rickandmorty.model.CharacterModel
         version = 3,
         exportSchema = false
 )
-abstract class RepoDatabase : RoomDatabase() {
+abstract class MainDatabase : RoomDatabase() {
 
-    abstract fun reposDao(): RepoDao
+    abstract fun charactersDao(): CharacterDao
 
     companion object {
 
         @Volatile
-        private var INSTANCE: RepoDatabase? = null
+        private var INSTANCE: MainDatabase? = null
 
-        fun getInstance(context: Context): RepoDatabase =
+        fun getInstance(context: Context): MainDatabase =
                 INSTANCE ?: synchronized(this) {
                     INSTANCE
                             ?: buildDatabase(context).also { INSTANCE = it }
@@ -44,7 +44,7 @@ abstract class RepoDatabase : RoomDatabase() {
 
         private fun buildDatabase(context: Context) =
                 Room.databaseBuilder(context.applicationContext,
-                        RepoDatabase::class.java, "Github.db")
+                        MainDatabase::class.java, "Github.db")
                         .build()
     }
 }

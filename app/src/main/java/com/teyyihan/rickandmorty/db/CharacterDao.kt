@@ -24,7 +24,7 @@ import androidx.room.Query
 import com.teyyihan.rickandmorty.model.CharacterModel
 
 @Dao
-interface RepoDao {
+interface CharacterDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(repos: List<CharacterModel>)

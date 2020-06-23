@@ -17,7 +17,6 @@
 package com.teyyihan.rickandmorty.ui
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.paging.LoadState
@@ -25,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.teyyihan.rickandmorty.R
 import com.teyyihan.rickandmorty.databinding.ReposLoadStateFooterViewItemBinding
 
-class ReposLoadStateViewHolder(
+class CharactersLoadStateViewHolder(
     private val binding: ReposLoadStateFooterViewItemBinding,
     retry: () -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
@@ -44,11 +43,11 @@ class ReposLoadStateViewHolder(
     }
 
     companion object {
-        fun create(parent: ViewGroup, retry: () -> Unit): ReposLoadStateViewHolder {
+        fun create(parent: ViewGroup, retry: () -> Unit): CharactersLoadStateViewHolder {
             val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.repos_load_state_footer_view_item, parent, false)
             val binding = ReposLoadStateFooterViewItemBinding.bind(view)
-            return ReposLoadStateViewHolder(binding, retry)
+            return CharactersLoadStateViewHolder(binding, retry)
         }
     }
 }

@@ -16,23 +16,25 @@
 
 package com.teyyihan.rickandmorty.ui
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.paging.insertSeparators
-import com.teyyihan.rickandmorty.data.GithubRepository
+import com.teyyihan.rickandmorty.data.CharacterRepository
 import com.teyyihan.rickandmorty.model.CharacterModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 /**
- * ViewModel for the [SearchRepositoriesActivity] screen.
- * The ViewModel works with the [GithubRepository] to get the data.
+ * ViewModel for the [MainActivity] screen.
+ * The ViewModel works with the [CharacterRepository] to get the data.
  */
 @ExperimentalCoroutinesApi
-class SearchRepositoriesViewModel(private val repository: GithubRepository) : ViewModel() {
+class MainActivityViewModel @ViewModelInject constructor(
+    private val repository: CharacterRepository)
+    : ViewModel() {
+
     private var currentQueryValue: String? = null
 
     private var currentSearchResult: Flow<PagingData<CharacterModel>>? = null
@@ -45,7 +47,7 @@ class SearchRepositoriesViewModel(private val repository: GithubRepository) : Vi
         currentQueryValue = queryString
         val newResult: Flow<PagingData<CharacterModel>> = repository.getSearchResultStream(queryString)
                 //.map { pagingData -> pagingData.map { CharacterModel(it) } }
-                .cachedIn(viewModelScope)
+                //.cachedIn(viewModelScope)
         currentSearchResult = newResult
         return newResult
     }

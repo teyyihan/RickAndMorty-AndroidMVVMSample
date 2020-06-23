@@ -16,8 +16,6 @@
 
 package com.teyyihan.rickandmorty.ui
 
-import android.content.Intent
-import android.net.Uri
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -29,7 +27,7 @@ import com.teyyihan.rickandmorty.model.CharacterModel
 /**
  * View Holder for a [Repo] RecyclerView list item.
  */
-class RepoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class CharacterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val name: TextView = view.findViewById(R.id.repo_name)
     private val description: TextView = view.findViewById(R.id.repo_description)
     private val stars: TextView = view.findViewById(R.id.repo_stars)
@@ -58,10 +56,10 @@ class RepoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
 
     companion object {
-        fun create(parent: ViewGroup): RepoViewHolder {
+        fun create(parent: ViewGroup): CharacterViewHolder {
             val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.repo_view_item, parent, false)
-            return RepoViewHolder(view)
+            return CharacterViewHolder(view)
         }
     }
 }
