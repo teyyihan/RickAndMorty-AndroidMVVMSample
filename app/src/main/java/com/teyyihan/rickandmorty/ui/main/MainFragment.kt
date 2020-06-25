@@ -1,31 +1,28 @@
 package com.teyyihan.rickandmorty.ui.main
 
+import android.content.Context
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.MenuItemCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.observe
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.Fade
-import androidx.transition.Transition
-import androidx.transition.TransitionInflater
-import androidx.transition.TransitionManager
-import com.teyyihan.rickandmorty.R
 import com.teyyihan.rickandmorty.databinding.FragmentMainBinding
 import com.teyyihan.rickandmorty.db.PreferencesRepository
 import com.teyyihan.rickandmorty.ui.CharacterAdapter
 import com.teyyihan.rickandmorty.ui.CharactersLoadStateAdapter
 import com.teyyihan.rickandmorty.ui.MainActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
@@ -46,6 +43,11 @@ class MainFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var binding : FragmentMainBinding
 
+    @Inject
+    @ApplicationContext
+    lateinit var mContext: Context
+
+
 
     private var searchJob: Job? = null
 
@@ -65,10 +67,10 @@ class MainFragment : Fragment() {
         val view = binding.root
 
         recyclerView = binding.list
-        val decoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
-        recyclerView.addItemDecoration(decoration)
+        recyclerView.layoutManager =GridLayoutManager(mContext,2)
 
-        setMainViewmodelListener()
+
+        setSearchViewResultListener()
 
 //       preferencesRepository
 //           .isDarkThemeLive.observe(viewLifecycleOwner, Observer { isDarkTheme ->
@@ -87,7 +89,7 @@ class MainFragment : Fragment() {
         return view
     }
 
-    private fun setMainViewmodelListener() {
+    private fun setSearchViewResultListener() {
         mainViewModel.queryTextLive.observe(viewLifecycleOwner, Observer {
             search(it)
         })
