@@ -33,22 +33,4 @@ interface RickAndMortyAPI {
             @Query("page") page: Int?
     ) : CharacterListResponse
 
-    companion object {
-        private const val BASE_URL = "https://rickandmortyapi.com/api/"
-
-        fun create(): RickAndMortyAPI {
-            val logger = HttpLoggingInterceptor()
-            logger.level = Level.BASIC
-
-            val client = OkHttpClient.Builder()
-                    .addInterceptor(logger)
-                    .build()
-            return Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .client(client)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build()
-                    .create(RickAndMortyAPI::class.java)
-        }
-    }
 }

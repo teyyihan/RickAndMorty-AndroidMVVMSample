@@ -58,7 +58,7 @@ class CharacterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     companion object {
         fun create(parent: ViewGroup): CharacterViewHolder {
             val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.repo_view_item, parent, false)
+                    .inflate(R.layout.character_view_item, parent, false)
             return CharacterViewHolder(view)
         }
     }

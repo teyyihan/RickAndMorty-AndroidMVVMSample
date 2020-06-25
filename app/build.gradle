@@ -47,7 +47,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
     implementation "androidx.appcompat:appcompat:$supportLibVersion"
     implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
-    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+    implementation "androidx.constraintlayout:constraintlayout:2.0.0-beta7"
     implementation "com.google.android.material:material:$materialVersion"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
@@ -89,4 +89,8 @@ dependencies {
     // Debug database
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
     debugImplementation 'com.amitshekhar.android:debug-db-encrypt:1.0.6'
+
+    // Search view
+    implementation 'com.miguelcatalan:materialsearchview:1.4.0'
+
 }

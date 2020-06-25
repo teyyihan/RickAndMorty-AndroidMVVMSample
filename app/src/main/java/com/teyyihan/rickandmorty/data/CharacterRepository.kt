@@ -37,11 +37,11 @@ class CharacterRepository(
      * Search repositories whose names match the query, exposed as a stream of data that will emit
      * every time we get more data from the network.
      */
-    fun getSearchResultStream(query: String): Flow<PagingData<CharacterModel>> {
+    fun getSearchResultStream(query: String?): Flow<PagingData<CharacterModel>> {
         Log.d("GithubRepository", "New query: $query")
 
         // appending '%' so we can allow other characters to be before and after the query string
-        val dbQuery = "%${query.replace(' ', '%')}%"
+        val dbQuery = "%${query?.replace(' ', '%')}%"
         val pagingSourceFactory = { database.charactersDao().reposByName() }
 
         val pager = Pager(

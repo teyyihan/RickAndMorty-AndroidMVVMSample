@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/main_appbar_search_menu_item"
+        android:title="@string/search"
+        app:showAsAction="always"
+        android:icon="@drawable/search_icon_grey"
+        android:orderInCategory="100"/>
+
+    <item android:id="@+id/main_appbar_light_theme_menu_item"
+        android:title="@string/light_theme"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/main_appbar_dark_theme_menu_item"
+        android:title="@string/dark_theme"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/main_appbar_system_default_theme_menu_item"
+        android:title="@string/system_default"
+        app:showAsAction="never"/>
+
+
+</menu>

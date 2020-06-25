@@ -32,7 +32,7 @@ import java.lang.Exception
 
 @OptIn(ExperimentalPagingApi::class)
 class CharacterRemoteMediator(
-    private val query: String,
+    private val query: String?,
     private val service: RickAndMortyAPI,
     private val mainDatabase: MainDatabase
 ) : RemoteMediator<Int, CharacterModel>() {

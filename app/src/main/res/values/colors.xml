@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#b2ebf2</color>
-    <color name="colorPrimaryDark">#81b9bf</color>
-    <color name="colorPrimaryLight">#e5ffff</color>
 
-    <color name="colorSecondary">#a5d6a7</color>
-    <color name="colorSecondaryDark">#75a478</color>
-    <color name="colorSecondaryLight">#d7ffd9</color>
+    <!-- Light theme primary -->
+    <!-- Dark theme secondary -->
+    <color name="cyan100">#b2ebf2</color>
+    <color name="cyan100_dark">#81b9bf</color>
+    <color name="cyan100_light">#e5ffff</color>
+
+    <!-- Light theme secondary -->
+    <color name="green200">#a5d6a7</color>
+    <color name="green200_dark">#75a478</color>
+    <color name="green200_light">#d7ffd9</color>
+
+
+    <!-- Dark theme primary -->
+    <color name="grey_900">#212121</color>
+    <color name="grey_900_dark">#000000</color>
+    <color name="grey_900_light">#484848</color>
+
+    
+    <!-- Others -->
+    <color name="white50">#ffffff</color>
 
 </resources>

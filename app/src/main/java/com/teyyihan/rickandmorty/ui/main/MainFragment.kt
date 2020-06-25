@@ -1,48 +1,55 @@
 package com.teyyihan.rickandmorty.ui.main
 
 import android.os.Bundle
-import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
+import android.view.*
 import android.widget.Toast
-import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuItemCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.ExperimentalPagingApi
+import androidx.lifecycle.observe
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.Fade
+import androidx.transition.Transition
+import androidx.transition.TransitionInflater
+import androidx.transition.TransitionManager
 import com.teyyihan.rickandmorty.R
-import com.teyyihan.rickandmorty.databinding.ActivityMainBinding
 import com.teyyihan.rickandmorty.databinding.FragmentMainBinding
+import com.teyyihan.rickandmorty.db.PreferencesRepository
 import com.teyyihan.rickandmorty.ui.CharacterAdapter
 import com.teyyihan.rickandmorty.ui.CharactersLoadStateAdapter
-import com.teyyihan.rickandmorty.ui.MainActivity
 import com.teyyihan.rickandmorty.ui.MainActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+
 
 @AndroidEntryPoint
 @ExperimentalCoroutinesApi
 class MainFragment : Fragment() {
 
-    private val  viewModel by viewModels<MainActivityViewModel>()
+    @Inject
+    lateinit var preferencesRepository: PreferencesRepository
+    private val  viewModel by viewModels<MainFragmentViewmodel>()
+    private val  mainViewModel by activityViewModels<MainActivityViewModel>()
     private val adapter = CharacterAdapter()
     private lateinit var recyclerView: RecyclerView
+    private lateinit var binding : FragmentMainBinding
 
 
     private var searchJob: Job? = null
 
-    private fun search(query: String) {
+    private fun search(query: String?) {
         // Make sure we cancel the previous job before creating a new one
         searchJob?.cancel()
         searchJob = lifecycleScope.launch {
@@ -52,19 +59,40 @@ class MainFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_main, container, false)
 
-        recyclerView = view.findViewById(R.id.list)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = FragmentMainBinding.inflate(inflater,container,false)
+        val view = binding.root
+
+        recyclerView = binding.list
         val decoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
         recyclerView.addItemDecoration(decoration)
 
+        setMainViewmodelListener()
 
-        //initSearch("query")
-       // binding.retryButton.setOnClickListener { adapter.retry() }
+//       preferencesRepository
+//           .isDarkThemeLive.observe(viewLifecycleOwner, Observer { isDarkTheme ->
+//                isDarkTheme?.let { darkThemeSwitch.isChecked = it
+//                }
+//            })
+//
+//        binding.retryButton.setOnClickListener {
+//            preferencesRepository.isDarkTheme = true
+//        }
+//
+//        darkThemeSwitch.setOnCheckedChangeListener { _, checked ->
+//            preferenceRepository.isDarkTheme = checked
+//        }
 
         return view
     }
+
+    private fun setMainViewmodelListener() {
+        mainViewModel.queryTextLive.observe(viewLifecycleOwner, Observer {
+            search(it)
+        })
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -74,7 +102,6 @@ class MainFragment : Fragment() {
 
         initAdapter()
         search("query")
-        initSearch("query")
         retry_button.setOnClickListener { adapter.retry() }
     }
 
@@ -88,7 +115,7 @@ class MainFragment : Fragment() {
             // Only show the list if refresh succeeds.
             recyclerView.isVisible = loadState.refresh is LoadState.NotLoading
             // Show loading spinner during initial load or refresh.
-            progress_bar.isVisible = loadState.refresh is LoadState.Loading
+            //progress_bar.isVisible = (loadState.refresh is LoadState.Loading)
             // Show the retry state if initial load or refresh fails.
             retry_button.isVisible = loadState.refresh is LoadState.Error
 
@@ -106,42 +133,6 @@ class MainFragment : Fragment() {
             }
         }
 
-    }
-
-    private fun initSearch(query: String) {
-        search_repo.setText(query)
-
-        search_repo.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_GO) {
-                updateRepoListFromInput()
-                true
-            } else {
-                false
-            }
-        }
-        search_repo.setOnKeyListener { _, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                updateRepoListFromInput()
-                true
-            } else {
-                false
-            }
-        }
-
-//        lifecycleScope.launch {
-//            @OptIn(ExperimentalPagingApi::class)
-//            adapter.dataRefreshFlow.collect {
-//                recyclerView.scrollToPosition(0)
-//            }
-//        }
-    }
-
-    private fun updateRepoListFromInput() {
-        search_repo.text.trim().let {
-            if (it.isNotEmpty()) {
-                search(it.toString())
-            }
-        }
     }
 
 

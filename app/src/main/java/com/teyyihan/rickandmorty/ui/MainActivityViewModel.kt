@@ -17,6 +17,7 @@
 package com.teyyihan.rickandmorty.ui
 
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -31,25 +32,8 @@ import kotlinx.coroutines.flow.Flow
  * The ViewModel works with the [CharacterRepository] to get the data.
  */
 @ExperimentalCoroutinesApi
-class MainActivityViewModel @ViewModelInject constructor(
-    private val repository: CharacterRepository)
-    : ViewModel() {
+class MainActivityViewModel @ViewModelInject constructor() : ViewModel() {
 
-    private var currentQueryValue: String? = null
-
-    private var currentSearchResult: Flow<PagingData<CharacterModel>>? = null
-
-    fun searchRepo(queryString: String): Flow<PagingData<CharacterModel>> {
-        val lastResult = currentSearchResult
-        if (queryString == currentQueryValue && lastResult != null) {
-            return lastResult
-        }
-        currentQueryValue = queryString
-        val newResult: Flow<PagingData<CharacterModel>> = repository.getSearchResultStream(queryString)
-                //.map { pagingData -> pagingData.map { CharacterModel(it) } }
-                //.cachedIn(viewModelScope)
-        currentSearchResult = newResult
-        return newResult
-    }
+   val queryTextLive = MutableLiveData<String?>()
 
 }
