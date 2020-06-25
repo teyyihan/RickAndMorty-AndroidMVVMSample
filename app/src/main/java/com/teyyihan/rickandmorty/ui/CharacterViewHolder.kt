@@ -16,34 +16,33 @@
 
 package com.teyyihan.rickandmorty.ui
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.ViewCompat
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.recyclerview.widget.RecyclerView
 import com.teyyihan.rickandmorty.R
+import com.teyyihan.rickandmorty.databinding.CharacterViewItemBinding
 import com.teyyihan.rickandmorty.model.CharacterModel
 
 /**
  * View Holder for a [Repo] RecyclerView list item.
  */
-class CharacterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    private val name: TextView = view.findViewById(R.id.repo_name)
-    private val description: TextView = view.findViewById(R.id.repo_description)
-    private val stars: TextView = view.findViewById(R.id.repo_stars)
-    private val language: TextView = view.findViewById(R.id.repo_language)
-    private val forks: TextView = view.findViewById(R.id.repo_forks)
+class CharacterViewHolder(
+    binding: CharacterViewItemBinding
+) : RecyclerView.ViewHolder(binding.root) {
+    val name: TextView = binding.repoName
+    val view : ConstraintLayout =binding.root
 
     private var repo: CharacterModel? = null
 
-    init {
-    }
 
     fun bind(repo: CharacterModel?) {
         if (repo == null) {
-            val resources = itemView.resources
-            description.visibility = View.GONE
-            language.visibility = View.GONE
         } else {
             showRepoData(repo)
         }
@@ -56,9 +55,10 @@ class CharacterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
 
     companion object {
-        fun create(parent: ViewGroup): CharacterViewHolder {
-            val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.character_view_item, parent, false)
+        fun create(
+            parent: ViewGroup
+        ): CharacterViewHolder {
+            val view = CharacterViewItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             return CharacterViewHolder(view)
         }
     }

@@ -2,22 +2,30 @@ package com.teyyihan.rickandmorty.ui.main
 
 import android.content.Context
 import android.os.Bundle
+import androidx.transition.Transition
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.transition.*
+import com.teyyihan.rickandmorty.R
 import com.teyyihan.rickandmorty.databinding.FragmentMainBinding
 import com.teyyihan.rickandmorty.db.PreferencesRepository
+import com.teyyihan.rickandmorty.model.CharacterModel
 import com.teyyihan.rickandmorty.ui.CharacterAdapter
 import com.teyyihan.rickandmorty.ui.CharactersLoadStateAdapter
 import com.teyyihan.rickandmorty.ui.MainActivityViewModel
@@ -46,9 +54,6 @@ class MainFragment : Fragment() {
     @Inject
     @ApplicationContext
     lateinit var mContext: Context
-
-
-
     private var searchJob: Job? = null
 
     private fun search(query: String?) {
@@ -59,6 +64,12 @@ class MainFragment : Fragment() {
                 adapter.submitData(it)
             }
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementReturnTransition = MaterialContainerTransform().setDuration(1000)
+        sharedElementEnterTransition = MaterialContainerTransform().setDuration(1000)
     }
 
 
@@ -102,6 +113,14 @@ class MainFragment : Fragment() {
         val decoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
         recyclerView.addItemDecoration(decoration)
 
+        adapter.characterClickListener = object : CharacterAdapter.CharacterAdapterListener{
+            override fun onCharacterClicked(cardView: View, email: CharacterModel) {
+                val extras = FragmentNavigatorExtras(cardView to "trans")
+                findNavController().navigate(R.id.action_mainFragment_to_characterFragment,null,null, extras)
+            }
+
+        }
+
         initAdapter()
         search("query")
         retry_button.setOnClickListener { adapter.retry() }
@@ -113,6 +132,8 @@ class MainFragment : Fragment() {
                 header = CharactersLoadStateAdapter { adapter.retry() },
                 footer = CharactersLoadStateAdapter { adapter.retry() }
         )
+
+
         adapter.addLoadStateListener { loadState ->
             // Only show the list if refresh succeeds.
             recyclerView.isVisible = loadState.refresh is LoadState.NotLoading
@@ -136,6 +157,7 @@ class MainFragment : Fragment() {
         }
 
     }
+
 
 
 }

@@ -16,6 +16,7 @@
 
 package com.teyyihan.rickandmorty.ui
 
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -25,20 +26,32 @@ import com.teyyihan.rickandmorty.model.CharacterModel
 /**
  * Adapter for the list of repositories.
  */
-class CharacterAdapter : PagingDataAdapter<CharacterModel, ViewHolder>(UIMODEL_COMPARATOR) {
+class CharacterAdapter : PagingDataAdapter<CharacterModel, CharacterViewHolder>(UIMODEL_COMPARATOR) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    lateinit var characterClickListener: CharacterAdapterListener
+
+    interface CharacterAdapterListener {
+        fun onCharacterClicked(cardView: View, email: CharacterModel)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
         return CharacterViewHolder.create(parent)
 
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
         val uiModel = getItem(position)
+
         uiModel.let {
-
-         (holder as CharacterViewHolder).bind(uiModel)
-
+         holder.bind(uiModel)
         }
+        holder.view.transitionName = uiModel?._id.toString()
+        holder.view.setOnClickListener {
+            if (uiModel != null) {
+                characterClickListener.onCharacterClicked(holder.view,uiModel)
+            }
+        }
+
     }
 
     companion object {
