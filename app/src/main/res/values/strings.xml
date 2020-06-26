@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">RickAndMorty</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search">Search</string>
     <string name="light_theme">Light Theme</string>
     <string name="dark_theme">Dark theme</string>
     <string name="system_default">System default</string>
+
+    <string name="character_transition_container">character_transition_container_%1$s</string>
+
 </resources>

@@ -11,6 +11,7 @@ import androidx.transition.Fade
 import com.google.android.material.transition.MaterialContainerTransform
 import com.teyyihan.rickandmorty.R
 import com.teyyihan.rickandmorty.databinding.FragmentCharacterBinding
+import java.lang.Exception
 
 class CharacterFragment : Fragment() {
 
@@ -19,22 +20,15 @@ class CharacterFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = MaterialContainerTransform().setDuration(1000)
+
+        sharedElementEnterTransition = MaterialContainerTransform().setDuration(300)
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentCharacterBinding.inflate(inflater, container, false)
-
-
+        binding.root.transitionName = "1" /*getString(R.string.character_transition_container,args.character?._id.toString())*/
         return binding.root
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.root.transitionName = "character_transition_"+args.character?._id.toString()
-
-    }
-
-
 
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.teyyihan.rickandmorty.ui
+package com.teyyihan.rickandmorty.ui.character
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

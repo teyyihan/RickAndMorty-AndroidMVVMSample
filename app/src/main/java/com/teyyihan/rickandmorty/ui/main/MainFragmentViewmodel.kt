@@ -28,8 +28,8 @@ class MainFragmentViewmodel @ViewModelInject constructor(
         }
         currentQueryValue = queryString
         val newResult: Flow<PagingData<CharacterModel>> = repository.getSearchResultStream(queryString)
-            //.map { pagingData -> pagingData.map { CharacterModel(it) } }
             .cachedIn(viewModelScope)
+
         currentSearchResult = newResult
         return newResult
     }

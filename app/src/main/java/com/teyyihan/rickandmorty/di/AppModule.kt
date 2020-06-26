@@ -22,11 +22,6 @@ import javax.inject.Singleton
 @InstallIn(ApplicationComponent::class)
 object AppModule {
 
-    @Provides
-    fun provideMainDatabase(@ApplicationContext context: Context): MainDatabase {
-        return MainDatabase.getInstance(context)
-    }
-
     @Singleton
     @Provides
     fun provideRickAndMortyAPI(client : OkHttpClient, gsonConverterFactory: GsonConverterFactory) : RickAndMortyAPI {
