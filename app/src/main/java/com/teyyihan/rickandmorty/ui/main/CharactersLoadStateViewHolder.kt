@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.teyyihan.rickandmorty.ui.character
+package com.teyyihan.rickandmorty.ui.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -47,7 +47,10 @@ class CharactersLoadStateViewHolder(
             val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.characters_load_state_footer_view_item, parent, false)
             val binding = CharactersLoadStateFooterViewItemBinding.bind(view)
-            return CharactersLoadStateViewHolder(binding, retry)
+            return CharactersLoadStateViewHolder(
+                binding,
+                retry
+            )
         }
     }
 }

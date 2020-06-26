@@ -21,6 +21,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.lifecycle.Observer
 import com.miguelcatalan.materialsearchview.MaterialSearchView
 import com.teyyihan.rickandmorty.R
@@ -56,6 +57,7 @@ class MainActivity : AppCompatActivity() {
             })
 
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 

@@ -1,27 +1,28 @@
-package com.teyyihan.rickandmorty.ui.character
+package com.teyyihan.rickandmorty.ui.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.RequestManager
 import com.teyyihan.rickandmorty.databinding.CharacterViewItemBinding
 import com.teyyihan.rickandmorty.model.CharacterModel
+import javax.inject.Inject
 
 
-class CharacterViewHolder(
-    binding: CharacterViewItemBinding
+class CharacterViewHolder @Inject constructor(
+    val binding: CharacterViewItemBinding,
+    val glide: RequestManager
 ) : RecyclerView.ViewHolder(binding.root) {
+
     val name: TextView = binding.characterViewItemCharacterName
     val cardView : CardView =binding.root
-
     private var character : CharacterModel? = null
 
 
     fun bind(character: CharacterModel?) {
-        if (character == null) {
-        } else {
+        if (character != null) {
             showRepoData(character)
         }
     }
@@ -29,14 +30,18 @@ class CharacterViewHolder(
     private fun showRepoData(character: CharacterModel) {
         this.character = character
         name.text = character.name
+
+        glide.load(character._image).into(binding.characterViewItemCharacterImage)
+
     }
 
     companion object {
         fun create(
-            parent: ViewGroup
+            parent: ViewGroup,
+            glide: RequestManager
         ): CharacterViewHolder {
             val view = CharacterViewItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            return CharacterViewHolder(view)
+            return CharacterViewHolder(view,glide)
         }
     }
 }

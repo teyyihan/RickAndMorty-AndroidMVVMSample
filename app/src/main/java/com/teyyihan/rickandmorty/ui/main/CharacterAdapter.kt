@@ -1,22 +1,28 @@
-package com.teyyihan.rickandmorty.ui.character
+package com.teyyihan.rickandmorty.ui.main
 
-import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import com.bumptech.glide.RequestManager
+import com.teyyihan.rickandmorty.databinding.CharacterViewItemBinding
 import com.teyyihan.rickandmorty.model.CharacterModel
 
-class CharacterAdapter : PagingDataAdapter<CharacterModel, CharacterViewHolder>(UIMODEL_COMPARATOR) {
+class CharacterAdapter(val glide: RequestManager) : PagingDataAdapter<CharacterModel, CharacterViewHolder>(
+    UIMODEL_COMPARATOR
+) {
 
 
     lateinit var characterClickListener: CharacterAdapterListener
 
     interface CharacterAdapterListener {
-        fun onCharacterClicked(cardView: View, characterModel: CharacterModel)
+        fun onCharacterClicked(characterBinding: CharacterViewItemBinding, characterModel: CharacterModel)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
-        return CharacterViewHolder.create(parent)
+        return CharacterViewHolder.create(
+            parent,
+            glide
+        )
 
     }
 
@@ -27,9 +33,10 @@ class CharacterAdapter : PagingDataAdapter<CharacterModel, CharacterViewHolder>(
          holder.bind(characterModel)
         }
         holder.cardView.transitionName = "character_transition_container_"+characterModel?._id.toString()
+        holder.binding.characterViewItemCharacterImage.transitionName = "character_transition_imageview_"+characterModel?._image.toString()
         holder.cardView.setOnClickListener {
             if (characterModel != null) {
-                characterClickListener.onCharacterClicked(holder.cardView,characterModel)
+                characterClickListener.onCharacterClicked(holder.binding,characterModel)
             }
         }
 

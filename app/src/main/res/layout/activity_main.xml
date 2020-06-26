@@ -15,14 +15,14 @@
   ~ limitations under the License.
   -->
 
-<androidx.constraintlayout.motion.widget.MotionLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity"
-    app:layoutDescription="@xml/activity_main_scene"
+
     android:theme="@style/Theme.MyApp">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -64,4 +64,4 @@
         app:layout_constraintTop_toBottomOf="@id/main_fragment_appbar_layout"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-</androidx.constraintlayout.motion.widget.MotionLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.teyyihan.rickandmorty.ui.character
+package com.teyyihan.rickandmorty.ui.main
 
 import android.view.ViewGroup
 import androidx.paging.LoadState
@@ -28,6 +28,9 @@ class CharactersLoadStateAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): CharactersLoadStateViewHolder {
-        return CharactersLoadStateViewHolder.create(parent, retry)
+        return CharactersLoadStateViewHolder.create(
+            parent,
+            retry
+        )
     }
 }

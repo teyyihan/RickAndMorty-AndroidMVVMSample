@@ -2,6 +2,8 @@ package com.teyyihan.rickandmorty.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.teyyihan.rickandmorty.Consts
 import com.teyyihan.rickandmorty.api.RickAndMortyAPI
 import com.teyyihan.rickandmorty.data.CharacterRepository
@@ -24,14 +26,8 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideRickAndMortyAPI(client : OkHttpClient, gsonConverterFactory: GsonConverterFactory) : RickAndMortyAPI {
-
-        return Retrofit.Builder()
-            .baseUrl(Consts.BASE_URL)
-            .client(client)
-            .addConverterFactory(gsonConverterFactory)
-            .build()
-            .create(RickAndMortyAPI::class.java)
+    fun provideGlide(@ApplicationContext appContext: Context) : RequestManager {
+        return Glide.with(appContext)
     }
 
     @Singleton

@@ -17,23 +17,21 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.RequestManager
+import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialFadeThrough
 import com.teyyihan.rickandmorty.Consts
-import com.teyyihan.rickandmorty.R
+import com.teyyihan.rickandmorty.databinding.CharacterViewItemBinding
 import com.teyyihan.rickandmorty.databinding.FragmentMainBinding
 import com.teyyihan.rickandmorty.db.PreferencesRepository
 import com.teyyihan.rickandmorty.model.CharacterModel
 import com.teyyihan.rickandmorty.ui.MainActivityViewModel
-import com.teyyihan.rickandmorty.ui.character.CharacterAdapter
-import com.teyyihan.rickandmorty.ui.character.CharactersLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 
 
@@ -45,11 +43,14 @@ class MainFragment : Fragment() {
     @ApplicationContext
     lateinit var appContext: Context
     @Inject
+    lateinit var glide : RequestManager
+    @Inject
     lateinit var preferencesRepository: PreferencesRepository
     private val  viewModel by viewModels<MainFragmentViewmodel>()
     private val  mainViewModel by activityViewModels<MainActivityViewModel>()
-    private val adapter = CharacterAdapter()
+    private lateinit var adapter : CharacterAdapter
     private lateinit var binding : FragmentMainBinding
+
 
 
     private var searchJob: Job? = null
@@ -66,6 +67,7 @@ class MainFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        adapter = CharacterAdapter(glide)
         enterTransition = MaterialFadeThrough().apply {
             duration = 300
         }
@@ -77,6 +79,7 @@ class MainFragment : Fragment() {
         val view = binding.root
 
         binding.list.layoutManager = GridLayoutManager(appContext, Consts.GRID_COUNT)
+
 
 
         setSearchViewResultListener()
@@ -109,14 +112,11 @@ class MainFragment : Fragment() {
         view.doOnPreDraw { startPostponedEnterTransition() }
 
         adapter.characterClickListener = object : CharacterAdapter.CharacterAdapterListener{
-            override fun onCharacterClicked(cardView: View, characterModel: CharacterModel) {
-
+            override fun onCharacterClicked(characterBinding: CharacterViewItemBinding, characterModel: CharacterModel) {
 
                 val action = MainFragmentDirections.actionMainFragmentToCharacterFragment(characterModel)
-                val extras = FragmentNavigatorExtras(cardView to "1"/*getString(R.string.character_transition_container,characterModel._id.toString())*/)
+                val extras = FragmentNavigatorExtras((characterBinding.characterViewItemCharacterImage to Consts.CHARACTER_IMAGEVIEW_TRANSITION))
                 findNavController().navigate(action, extras)
-
-
 
             }
 
