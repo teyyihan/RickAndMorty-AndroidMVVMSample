@@ -20,6 +20,7 @@ import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.teyyihan.rickandmorty.Consts
 import com.teyyihan.rickandmorty.api.RickAndMortyAPI
 import com.teyyihan.rickandmorty.db.MainDatabase
 import com.teyyihan.rickandmorty.model.CharacterModel
@@ -33,19 +34,14 @@ class CharacterRepository(
     private val database: MainDatabase
 ) {
 
-    /**
-     * Search repositories whose names match the query, exposed as a stream of data that will emit
-     * every time we get more data from the network.
-     */
     fun getSearchResultStream(query: String?): Flow<PagingData<CharacterModel>> {
-        Log.d("GithubRepository", "New query: $query")
 
         // appending '%' so we can allow other characters to be before and after the query string
         val dbQuery = "%${query?.replace(' ', '%')}%"
         val pagingSourceFactory = { database.charactersDao().reposByName() }
 
         val pager = Pager(
-                config = PagingConfig(pageSize = NETWORK_PAGE_SIZE),
+                config = PagingConfig(pageSize = Consts.NETWORK_PAGE_SIZE),
                 remoteMediator = CharacterRemoteMediator(
                         query,
                         service,
@@ -58,7 +54,5 @@ class CharacterRepository(
         return pager
     }
 
-    companion object {
-        private const val NETWORK_PAGE_SIZE = 20
-    }
+
 }

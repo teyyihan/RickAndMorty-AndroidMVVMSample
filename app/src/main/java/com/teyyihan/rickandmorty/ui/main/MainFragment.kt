@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -68,8 +69,9 @@ class MainFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementReturnTransition = MaterialContainerTransform().setDuration(1000)
-        sharedElementEnterTransition = MaterialContainerTransform().setDuration(1000)
+        enterTransition = MaterialFadeThrough().apply {
+            duration = 1000
+        }
     }
 
 
@@ -82,6 +84,10 @@ class MainFragment : Fragment() {
 
 
         setSearchViewResultListener()
+
+        // add dividers between RecyclerView's row items
+        val decoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+        recyclerView.addItemDecoration(decoration)
 
 //       preferencesRepository
 //           .isDarkThemeLive.observe(viewLifecycleOwner, Observer { isDarkTheme ->
@@ -100,23 +106,27 @@ class MainFragment : Fragment() {
         return view
     }
 
-    private fun setSearchViewResultListener() {
-        mainViewModel.queryTextLive.observe(viewLifecycleOwner, Observer {
-            search(it)
-        })
-    }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // add dividers between RecyclerView's row items
-        val decoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
-        recyclerView.addItemDecoration(decoration)
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
 
         adapter.characterClickListener = object : CharacterAdapter.CharacterAdapterListener{
             override fun onCharacterClicked(cardView: View, email: CharacterModel) {
-                val extras = FragmentNavigatorExtras(cardView to "trans")
-                findNavController().navigate(R.id.action_mainFragment_to_characterFragment,null,null, extras)
+
+                exitTransition = createMaterialElevationScale(false).apply {
+                    duration = 300
+                }
+                reenterTransition = createMaterialElevationScale(true).apply {
+                    duration = 300
+                }
+
+                val action = MainFragmentDirections.actionMainFragmentToCharacterFragment(email)
+
+                val extras = FragmentNavigatorExtras(cardView to "character_transition_"+email._id.toString())
+                findNavController().navigate(action, extras)
+
             }
 
         }
@@ -126,6 +136,11 @@ class MainFragment : Fragment() {
         retry_button.setOnClickListener { adapter.retry() }
     }
 
+    private fun setSearchViewResultListener() {
+        mainViewModel.queryTextLive.observe(viewLifecycleOwner, Observer {
+            search(it)
+        })
+    }
 
     private fun initAdapter() {
         recyclerView.adapter = adapter.withLoadStateHeaderAndFooter(
@@ -156,6 +171,15 @@ class MainFragment : Fragment() {
             }
         }
 
+    }
+
+    fun createMaterialElevationScale(forward: Boolean): Transition {
+        return MaterialSharedAxis(MaterialSharedAxis.Z, forward).apply {
+            val scaleProvider = primaryAnimatorProvider as ScaleProvider
+            scaleProvider.incomingStartScale = 0.85F
+            scaleProvider.outgoingEndScale = 0.85F
+            secondaryAnimatorProvider = FadeProvider()
+        }
     }
 
 

@@ -10,9 +10,6 @@
         android:name="com.teyyihan.rickandmorty.ui.main.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
-        <argument
-            android:name="asd"
-            app:argType="long"/>
         <action
             android:id="@+id/action_mainFragment_to_characterFragment"
             app:destination="@id/characterFragment" />
@@ -23,8 +20,8 @@
         android:label="fragment_character"
         tools:layout="@layout/fragment_character" >
         <argument
-            android:name="asd"
-            app:argType="long"/>
-
+            android:name="character"
+            app:argType="com.teyyihan.rickandmorty.model.CharacterModel"
+            app:nullable="true" />
     </fragment>
 </navigation>

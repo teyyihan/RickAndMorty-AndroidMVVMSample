@@ -1,6 +1,8 @@
 package com.teyyihan.rickandmorty.model
 
 
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -31,4 +33,36 @@ data class CharacterModel(
     var url: String?,
     var prevKey : Int?,
     var nextKey : Int?
-)
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(Int::class.java.classLoader) as? Int
+    ) {
+    }
+
+    override fun writeToParcel(p0: Parcel?, p1: Int) {
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<CharacterModel> {
+        override fun createFromParcel(parcel: Parcel): CharacterModel {
+            return CharacterModel(parcel)
+        }
+
+        override fun newArray(size: Int): Array<CharacterModel?> {
+            return arrayOfNulls(size)
+        }
+    }
+}

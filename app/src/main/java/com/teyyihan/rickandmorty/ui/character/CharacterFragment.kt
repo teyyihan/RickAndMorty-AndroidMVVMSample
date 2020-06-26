@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.navArgs
 import androidx.transition.Fade
 import com.google.android.material.transition.MaterialContainerTransform
 import com.teyyihan.rickandmorty.R
@@ -14,6 +15,7 @@ import com.teyyihan.rickandmorty.databinding.FragmentCharacterBinding
 class CharacterFragment : Fragment() {
 
     private lateinit var binding : FragmentCharacterBinding
+    private val args: CharacterFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +31,7 @@ class CharacterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.root.transitionName = "trans"
+        binding.root.transitionName = "character_transition_"+args.character?._id.toString()
 
     }
 

@@ -45,7 +45,7 @@ class CharacterAdapter : PagingDataAdapter<CharacterModel, CharacterViewHolder>(
         uiModel.let {
          holder.bind(uiModel)
         }
-        holder.view.transitionName = uiModel?._id.toString()
+        holder.view.transitionName = "character_transition_"+uiModel?._id.toString()
         holder.view.setOnClickListener {
             if (uiModel != null) {
                 characterClickListener.onCharacterClicked(holder.view,uiModel)

@@ -20,6 +20,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.teyyihan.rickandmorty.Consts
 import com.teyyihan.rickandmorty.model.CharacterModel
 
 @Database(
@@ -44,7 +45,7 @@ abstract class MainDatabase : RoomDatabase() {
 
         private fun buildDatabase(context: Context) =
                 Room.databaseBuilder(context.applicationContext,
-                        MainDatabase::class.java, "Github.db")
+                        MainDatabase::class.java, Consts.DATABASE_NAME)
                         .build()
     }
 }
