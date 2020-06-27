@@ -7,6 +7,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.teyyihan.rickandmorty.data.CharacterRepository
 import com.teyyihan.rickandmorty.model.CharacterModel
+import com.teyyihan.rickandmorty.model.CharacterQueryModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -17,17 +18,17 @@ class MainFragmentViewmodel @ViewModelInject constructor(
 ) : ViewModel() {
 
 
-    private var currentQueryValue: String? = null
+    private var currentQueryValue: CharacterQueryModel? = null
 
     private var currentSearchResult: Flow<PagingData<CharacterModel>>? = null
 
-    fun searchRepo(queryString: String?): Flow<PagingData<CharacterModel>> {
+    fun searchRepo(query: CharacterQueryModel?): Flow<PagingData<CharacterModel>> {
         val lastResult = currentSearchResult
-        if (queryString == currentQueryValue && lastResult != null) {
+        if (query == currentQueryValue && lastResult != null) {
             return lastResult
         }
-        currentQueryValue = queryString
-        val newResult: Flow<PagingData<CharacterModel>> = repository.getSearchResultStream(queryString)
+        currentQueryValue = query
+        val newResult: Flow<PagingData<CharacterModel>> = repository.getSearchResultStream(query)
             .cachedIn(viewModelScope)
 
         currentSearchResult = newResult

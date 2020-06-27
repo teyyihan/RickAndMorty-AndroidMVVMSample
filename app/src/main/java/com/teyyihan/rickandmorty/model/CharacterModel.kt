@@ -8,7 +8,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "repos")
+@Entity(tableName = "characters")
 data class CharacterModel(
 
     @SerializedName("created")
@@ -32,7 +32,9 @@ data class CharacterModel(
     @SerializedName("url")
     var url: String?,
     var prevKey : Int?,
-    var nextKey : Int?
+    var nextKey : Int?,
+    var filteredPrevKey : Int?,
+    var filteredNextKey : Int?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
@@ -44,6 +46,8 @@ data class CharacterModel(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Int::class.java.classLoader) as? Int
     ) {

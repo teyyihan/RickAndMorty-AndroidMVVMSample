@@ -16,7 +16,6 @@
 
 package com.teyyihan.rickandmorty.data
 
-import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -24,6 +23,7 @@ import com.teyyihan.rickandmorty.Consts
 import com.teyyihan.rickandmorty.api.RickAndMortyAPI
 import com.teyyihan.rickandmorty.db.MainDatabase
 import com.teyyihan.rickandmorty.model.CharacterModel
+import com.teyyihan.rickandmorty.model.CharacterQueryModel
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -34,11 +34,11 @@ class CharacterRepository(
     private val database: MainDatabase
 ) {
 
-    fun getSearchResultStream(query: String?): Flow<PagingData<CharacterModel>> {
+    fun getSearchResultStream(query: CharacterQueryModel?): Flow<PagingData<CharacterModel>> {
 
         // appending '%' so we can allow other characters to be before and after the query string
-        val dbQuery = "%${query?.replace(' ', '%')}%"
-        val pagingSourceFactory = { database.charactersDao().reposByName() }
+        //val dbQuery = "%${query?.replace(' ', '%')}%"
+        val pagingSourceFactory = { database.charactersDao().getCharacters() }
 
         val pager = Pager(
                 config = PagingConfig(pageSize = Consts.NETWORK_PAGE_SIZE),

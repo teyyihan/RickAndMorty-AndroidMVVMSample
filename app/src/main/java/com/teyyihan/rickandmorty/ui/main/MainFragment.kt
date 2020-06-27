@@ -25,6 +25,7 @@ import com.teyyihan.rickandmorty.databinding.CharacterViewItemBinding
 import com.teyyihan.rickandmorty.databinding.FragmentMainBinding
 import com.teyyihan.rickandmorty.db.PreferencesRepository
 import com.teyyihan.rickandmorty.model.CharacterModel
+import com.teyyihan.rickandmorty.model.CharacterQueryModel
 import com.teyyihan.rickandmorty.ui.MainActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -55,7 +56,7 @@ class MainFragment : Fragment() {
 
     private var searchJob: Job? = null
 
-    private fun search(query: String?) {
+    private fun search(query: CharacterQueryModel?) {
         // Make sure we cancel the previous job before creating a new one
         searchJob?.cancel()
         searchJob = lifecycleScope.launch {
@@ -123,13 +124,13 @@ class MainFragment : Fragment() {
         }
 
         initAdapter()
-        search("query")
+        search(null)
         binding.retryButton.setOnClickListener { adapter.retry() }
     }
 
     private fun setSearchViewResultListener() {
         mainViewModel.queryTextLive.observe(viewLifecycleOwner, Observer {
-            search(it)
+            search(CharacterQueryModel(name = it))
         })
     }
 

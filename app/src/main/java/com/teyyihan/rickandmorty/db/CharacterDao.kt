@@ -21,6 +21,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.teyyihan.rickandmorty.model.CharacterGender
+import com.teyyihan.rickandmorty.model.CharacterLifeStatus
 import com.teyyihan.rickandmorty.model.CharacterModel
 
 @Dao
@@ -29,10 +31,11 @@ interface CharacterDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(repos: List<CharacterModel>)
 
-    @Query("SELECT * FROM repos")
-    fun reposByName(): PagingSource<Int, CharacterModel>
+    @Query("SELECT * FROM characters")
+    fun getCharacters(): PagingSource<Int, CharacterModel>
 
-    @Query("DELETE FROM repos")
-    suspend fun clearRepos()
+
+    @Query("DELETE FROM characters")
+    suspend fun clearCharacters()
 
 }
