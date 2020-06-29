@@ -32,8 +32,8 @@ class CharacterAdapter(val glide: RequestManager) : PagingDataAdapter<CharacterM
         characterModel.let {
          holder.bind(characterModel)
         }
-        holder.cardView.transitionName = "character_transition_container_"+characterModel?._id.toString()
-        holder.binding.characterViewItemCharacterImage.transitionName = "character_transition_imageview_"+characterModel?._image.toString()
+        holder.binding.root.transitionName = "character_transition_container_"+characterModel?._id.toString()
+
         holder.cardView.setOnClickListener {
             if (characterModel != null) {
                 characterClickListener.onCharacterClicked(holder.binding,characterModel)

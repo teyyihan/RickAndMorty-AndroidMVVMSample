@@ -50,7 +50,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         setSupportActionBar(binding.mainFragmentToolbar)
-        binding.searchView.setOnQueryTextListener(searchViewListener)
 
         preferencesRepository.nightModeLive.observe(this, Observer {
                 it?.let { itt-> delegate.localNightMode = itt }
@@ -63,27 +62,9 @@ class MainActivity : AppCompatActivity() {
 
         menuInflater.inflate(R.menu.main_appbar_menu, menu)
 
-        val item: MenuItem = menu!!.findItem(R.id.main_appbar_search_menu_item)
-        binding.searchView.setMenuItem(item)
 
         return true
     }
 
-    val searchViewListener = object : MaterialSearchView.OnQueryTextListener{
-        override fun onQueryTextSubmit(query: String?): Boolean {
-            queryTextSubmit(query)
-            return false
-        }
-
-        override fun onQueryTextChange(newText: String?): Boolean {
-
-            return false
-        }
-
-    }
-
-    fun queryTextSubmit(query: String?) {
-        mainViewmodel.queryTextLive.value = query
-    }
 
 }

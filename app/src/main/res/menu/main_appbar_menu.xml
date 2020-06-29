@@ -2,12 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/main_appbar_search_menu_item"
-        android:title="@string/search"
-        app:showAsAction="always"
-        android:icon="@drawable/search_icon_grey"
-        android:orderInCategory="100"/>
-
     <item android:id="@+id/main_appbar_light_theme_menu_item"
         android:title="@string/light_theme"
         app:showAsAction="never"/>

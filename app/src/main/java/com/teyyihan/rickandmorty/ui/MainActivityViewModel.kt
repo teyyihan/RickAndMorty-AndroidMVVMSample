@@ -34,6 +34,5 @@ import kotlinx.coroutines.flow.Flow
 @ExperimentalCoroutinesApi
 class MainActivityViewModel @ViewModelInject constructor() : ViewModel() {
 
-   val queryTextLive = MutableLiveData<String?>()
 
 }

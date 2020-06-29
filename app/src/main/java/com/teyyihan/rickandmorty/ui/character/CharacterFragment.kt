@@ -6,10 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.SharedElementCallback
 import androidx.navigation.fragment.navArgs
 import androidx.transition.Fade
 import com.bumptech.glide.RequestManager
 import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
 import com.teyyihan.rickandmorty.Consts
 import com.teyyihan.rickandmorty.R
 import com.teyyihan.rickandmorty.databinding.FragmentCharacterBinding
@@ -32,9 +34,13 @@ class CharacterFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentCharacterBinding.inflate(inflater, container, false)
+
         binding.root.transitionName = Consts.CHARACTER_CONTAINER_TRANSITION
-        binding.characterFragmentImageview.transitionName = Consts.CHARACTER_IMAGEVIEW_TRANSITION
+
         glide.load(args.character?._image).into(binding.characterFragmentImageview)
+        binding.characterFragmentNameText.text = args.character?.name
+
+
         return binding.root
     }
 

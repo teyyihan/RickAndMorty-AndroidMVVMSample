@@ -31,8 +31,10 @@ interface CharacterDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(repos: List<CharacterModel>)
 
+
     @Query("SELECT * FROM characters")
     fun getCharacters(): PagingSource<Int, CharacterModel>
+
 
 
     @Query("DELETE FROM characters")

@@ -17,16 +17,16 @@ import java.lang.Exception
 
 @OptIn(ExperimentalPagingApi::class)
 class CharacterRemoteMediator(
-    private val query: CharacterQueryModel?,
     private val service: RickAndMortyAPI,
     private val mainDatabase: MainDatabase
 ) : RemoteMediator<Int, CharacterModel>() {
 
     override suspend fun load(loadType: LoadType, state: PagingState<Int, CharacterModel>): MediatorResult {
 
-
-        val page: Int? = if (query == null) {                   // Default listing
-            when (loadType) {
+        /**
+         *  Calculating next and previus key
+         */
+        val page: Int? = when (loadType) {
             LoadType.REFRESH -> {
                 state.anchorPosition?.let { position ->
                     state.closestItemToPosition(position)?.nextKey?.minus(1) ?: 1
@@ -44,51 +44,21 @@ class CharacterRemoteMediator(
             }
 
         }
-        } else {                                               // Filtering
-            when (loadType) {
-            LoadType.REFRESH -> {
-                state.anchorPosition?.let { position ->
-                    state.closestItemToPosition(position)?.filteredNextKey?.minus(1) ?: 1
-                } ?: 1
-            }
-            LoadType.PREPEND -> {
-
-                state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()?.filteredPrevKey
-
-            }
-            LoadType.APPEND -> {
-
-                state.pages.lastOrNull{ it.data.isNotEmpty() }?.data?.lastOrNull()?.filteredNextKey
-
-            }
-
-        }
-        }
 
 
         if (page != null) {
             try {
-                val apiResponse = service.getCharacters(page,  query?.name,  query?.status?.name,  query?.gender?.name)
-
+                val apiResponse = service.getCharacters(page,  null,  null,  null)
                 val characters = apiResponse.results
                 val endOfPaginationReached = characters.isEmpty()
 
-                if (query == null) {                        // Default listing
-                    characters.forEach {
-                        it.run {
-                            this.prevKey = if (page == 1) null else page - 1
-                            this.nextKey = if (endOfPaginationReached) null else page + 1
-                        }
 
+                characters.forEach {
+                    it.run {
+                        this.prevKey = if (page == 1) null else page - 1
+                        this.nextKey = if (endOfPaginationReached) null else page + 1
                     }
-                } else {                                    // Filtering
-                    characters.forEach {
-                        it.run {
-                            this.filteredPrevKey = if (page == 1) null else page - 1
-                            this.filteredNextKey = if (endOfPaginationReached) null else page + 1
-                        }
 
-                    }
                 }
 
 
@@ -99,6 +69,9 @@ class CharacterRemoteMediator(
             } catch (exception: IOException) {
                 return MediatorResult.Error(exception)
             } catch (exception: HttpException) {
+                if (exception.code() == 404) {
+                    return MediatorResult.Success(endOfPaginationReached = true)
+                }
                 return MediatorResult.Error(exception)
             }
         } else {

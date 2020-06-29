@@ -6,18 +6,18 @@
         <!--Material color attributes (dark theme) -->
         <item name="colorPrimary">@color/cyan100</item>
         <item name="android:textColor">@color/white50</item>
-<!--        <item name="colorPrimaryVariant">@color/grey_900_dark</item>-->
         <item name="colorSecondary">@color/cyan100</item>
         <item name="colorSecondaryVariant">@color/cyan100_dark</item>
         <item name="android:colorBackground">@color/grey_900</item>
         <item name="colorSurface">@color/grey_900_dark</item>
-<!--        <item name="colorOnPrimary">@color/grey_900_dark</item>-->
         <item name="colorOnSecondary">@color/grey_900</item>
         <item name="colorOnBackground">@color/white50</item>
         <item name="colorOnSurface">@color/white50</item>
         <item name="colorOnError">@color/grey_900_dark</item>
+        <item name="cardForegroundColor">@color/cyan100</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
         <item name="android:windowLightNavigationBar" tools:ignore="NewApi">false</item>
     </style>
+
 
 </resources>

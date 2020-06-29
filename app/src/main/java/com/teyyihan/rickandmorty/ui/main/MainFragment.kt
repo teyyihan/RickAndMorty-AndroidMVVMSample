@@ -83,8 +83,6 @@ class MainFragment : Fragment() {
 
 
 
-        setSearchViewResultListener()
-
         // add dividers between RecyclerView's row items
 //        val decoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
 //        recyclerView.addItemDecoration(decoration)
@@ -116,7 +114,7 @@ class MainFragment : Fragment() {
             override fun onCharacterClicked(characterBinding: CharacterViewItemBinding, characterModel: CharacterModel) {
 
                 val action = MainFragmentDirections.actionMainFragmentToCharacterFragment(characterModel)
-                val extras = FragmentNavigatorExtras((characterBinding.characterViewItemCharacterImage to Consts.CHARACTER_IMAGEVIEW_TRANSITION))
+                val extras = FragmentNavigatorExtras((characterBinding.root to Consts.CHARACTER_CONTAINER_TRANSITION))
                 findNavController().navigate(action, extras)
 
             }
@@ -124,15 +122,10 @@ class MainFragment : Fragment() {
         }
 
         initAdapter()
-        search(null)
+        search(/*CharacterQueryModel(name = "Rick")*/null)
         binding.retryButton.setOnClickListener { adapter.retry() }
     }
 
-    private fun setSearchViewResultListener() {
-        mainViewModel.queryTextLive.observe(viewLifecycleOwner, Observer {
-            search(CharacterQueryModel(name = it))
-        })
-    }
 
     private fun initAdapter() {
         binding.list.adapter = adapter.withLoadStateHeaderAndFooter(

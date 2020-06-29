@@ -18,6 +18,7 @@
         <!--and menus. colorError is used to indicate an error state for components such as-->
         <!--text fields.-->
         <item name="android:colorBackground">@color/white50</item>
+        <item name="cardForegroundColor">@color/grey_900</item>
         <item name="colorSurface">@color/white50</item>
         <!--"On" colors define how text, icons and strokes are colored in relation to the surface-->
         <!--on which they appear.-->
@@ -26,7 +27,10 @@
         <item name="colorOnBackground">@color/grey_900_dark</item>
         <item name="colorOnSurface">@color/grey_900_dark</item>
         <item name="colorOnError">@color/white50</item>
+        <item name="buttonStyle">@color/green200</item>
     </style>
+
+
     <style name="Base.Theme.MaterialThemeBuilder" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
         <item name="android:windowLightNavigationBar" tools:ignore="NewApi">false</item>
