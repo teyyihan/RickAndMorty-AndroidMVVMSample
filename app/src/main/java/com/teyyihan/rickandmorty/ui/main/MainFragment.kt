@@ -11,19 +11,16 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.RequestManager
-import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialFadeThrough
 import com.teyyihan.rickandmorty.Consts
 import com.teyyihan.rickandmorty.databinding.CharacterViewItemBinding
 import com.teyyihan.rickandmorty.databinding.FragmentMainBinding
-import com.teyyihan.rickandmorty.db.PreferencesRepository
 import com.teyyihan.rickandmorty.model.CharacterModel
 import com.teyyihan.rickandmorty.model.CharacterQueryModel
 import com.teyyihan.rickandmorty.ui.MainActivityViewModel
@@ -40,13 +37,9 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 class MainFragment : Fragment() {
 
-    @Inject
-    @ApplicationContext
-    lateinit var appContext: Context
+
     @Inject
     lateinit var glide : RequestManager
-    @Inject
-    lateinit var preferencesRepository: PreferencesRepository
     private val  viewModel by viewModels<MainFragmentViewmodel>()
     private val  mainViewModel by activityViewModels<MainActivityViewModel>()
     private lateinit var adapter : CharacterAdapter
@@ -79,27 +72,8 @@ class MainFragment : Fragment() {
         binding = FragmentMainBinding.inflate(inflater,container,false)
         val view = binding.root
 
-        binding.list.layoutManager = GridLayoutManager(appContext, Consts.GRID_COUNT)
+        binding.list.layoutManager = GridLayoutManager(activity, Consts.GRID_COUNT)
 
-
-
-        // add dividers between RecyclerView's row items
-//        val decoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
-//        recyclerView.addItemDecoration(decoration)
-
-//       preferencesRepository
-//           .isDarkThemeLive.observe(viewLifecycleOwner, Observer { isDarkTheme ->
-//                isDarkTheme?.let { darkThemeSwitch.isChecked = it
-//                }
-//            })
-//
-//        binding.retryButton.setOnClickListener {
-//            preferencesRepository.isDarkTheme = true
-//        }
-//
-//        darkThemeSwitch.setOnCheckedChangeListener { _, checked ->
-//            preferenceRepository.isDarkTheme = checked
-//        }
 
         return view
     }

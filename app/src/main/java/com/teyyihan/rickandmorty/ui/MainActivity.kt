@@ -21,12 +21,11 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
-import com.miguelcatalan.materialsearchview.MaterialSearchView
+import com.teyyihan.rickandmorty.MainApplication
 import com.teyyihan.rickandmorty.R
 import com.teyyihan.rickandmorty.databinding.ActivityMainBinding
-import com.teyyihan.rickandmorty.db.PreferencesRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
@@ -35,9 +34,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 @ExperimentalCoroutinesApi
 class MainActivity : AppCompatActivity() {
-
-    @Inject
-    lateinit var preferencesRepository: PreferencesRepository
 
     private lateinit var binding: ActivityMainBinding
     private val mainViewmodel by viewModels<MainActivityViewModel>()
@@ -51,19 +47,19 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.mainFragmentToolbar)
 
-        preferencesRepository.nightModeLive.observe(this, Observer {
-                it?.let { itt-> delegate.localNightMode = itt }
-            })
+        delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+
 
     }
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-
         menuInflater.inflate(R.menu.main_appbar_menu, menu)
-
-
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return super.onOptionsItemSelected(item)
     }
 
 

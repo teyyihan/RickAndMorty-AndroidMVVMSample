@@ -3,5 +3,5 @@
 
     <attr name="colorFillColor" format="color"/>
     <attr name="colorStrokeColor" format="color"/>
-
+    <attr name="cardViewColor" format="reference"/>
 </resources>

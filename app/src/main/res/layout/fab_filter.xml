@@ -11,20 +11,18 @@
         android:id="@+id/fab_filter_cardview"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        app:cardBackgroundColor="@color/grey_900_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:cardForegroundColor="?attr/cardForegroundColor"
         android:layout_margin="25dp"
-        app:cardElevation="10dp"/>
+        app:cardElevation="10dp"
+        app:cardBackgroundColor="?attr/colorSecondary"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fab_filter_constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:elevation="30dp"
-        app:layout_constraintDimensionRatio="5:4"
-        android:background="@color/cyan100">
+        app:layout_constraintDimensionRatio="5:4">
 
         <!-- name status gender -->
         <include layout="@layout/fab_filter_const_content"/>

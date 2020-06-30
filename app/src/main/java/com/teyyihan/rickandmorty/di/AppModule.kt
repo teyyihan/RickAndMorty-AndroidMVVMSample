@@ -5,10 +5,6 @@ import android.content.SharedPreferences
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.teyyihan.rickandmorty.Consts
-import com.teyyihan.rickandmorty.api.RickAndMortyAPI
-import com.teyyihan.rickandmorty.data.CharacterRepository
-import com.teyyihan.rickandmorty.db.MainDatabase
-import com.teyyihan.rickandmorty.db.PreferencesRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +12,6 @@ import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
@@ -28,12 +23,6 @@ object AppModule {
     @Provides
     fun provideGlide(@ApplicationContext appContext: Context) : RequestManager {
         return Glide.with(appContext)
-    }
-
-    @Singleton
-    @Provides
-    fun providePreferencesRepository(sharedPreferences: SharedPreferences): PreferencesRepository {
-        return PreferencesRepository(sharedPreferences)
     }
 
     @Provides

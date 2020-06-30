@@ -1,5 +1,8 @@
 <resources>
 
 
+    <style name="Widget.MyTheme.Cardview" parent="Widget.MaterialComponents.CardView">
+
+    </style>
 
 </resources>
