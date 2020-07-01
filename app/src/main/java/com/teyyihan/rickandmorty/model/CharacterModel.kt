@@ -6,6 +6,7 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "characters")
@@ -23,6 +24,9 @@ data class CharacterModel(
     var _image: String?,
     @SerializedName("name")
     var name: String?,
+    @TypeConverters(OriginTypeConverter::class)
+    @SerializedName("origin")
+    var origin: Origin?,
     @SerializedName("species")
     var species: String?,
     @SerializedName("status")
@@ -42,6 +46,7 @@ data class CharacterModel(
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString(),
         parcel.readString(),
+        parcel.readValue(Origin::class.java.classLoader) as Origin?,
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),

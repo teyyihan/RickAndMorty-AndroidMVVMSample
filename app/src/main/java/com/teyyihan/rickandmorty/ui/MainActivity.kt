@@ -26,6 +26,8 @@ import androidx.lifecycle.Observer
 import com.teyyihan.rickandmorty.MainApplication
 import com.teyyihan.rickandmorty.R
 import com.teyyihan.rickandmorty.databinding.ActivityMainBinding
+import com.teyyihan.rickandmorty.model.CharacterQueryModel
+import com.teyyihan.rickandmorty.ui.main.QueryBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
@@ -33,7 +35,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 @ExperimentalCoroutinesApi
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), QueryBottomSheet.BottomSheetListener {
 
     private lateinit var binding: ActivityMainBinding
     private val mainViewmodel by viewModels<MainActivityViewModel>()
@@ -58,9 +60,11 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
+    override fun queryButtonClicked(query: CharacterQueryModel?) {
+        mainViewmodel.query.postValue(query)
     }
+
+
 
 
 }

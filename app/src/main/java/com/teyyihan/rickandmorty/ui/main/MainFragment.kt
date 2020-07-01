@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -19,15 +21,18 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.RequestManager
 import com.google.android.material.transition.MaterialFadeThrough
 import com.teyyihan.rickandmorty.Consts
+import com.teyyihan.rickandmorty.R
 import com.teyyihan.rickandmorty.databinding.CharacterViewItemBinding
 import com.teyyihan.rickandmorty.databinding.FragmentMainBinding
 import com.teyyihan.rickandmorty.model.CharacterModel
 import com.teyyihan.rickandmorty.model.CharacterQueryModel
+import com.teyyihan.rickandmorty.ui.MainActivity
 import com.teyyihan.rickandmorty.ui.MainActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -35,7 +40,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 @ExperimentalCoroutinesApi
-class MainFragment : Fragment() {
+class MainFragment : Fragment(){
 
 
     @Inject
@@ -44,7 +49,7 @@ class MainFragment : Fragment() {
     private val  mainViewModel by activityViewModels<MainActivityViewModel>()
     private lateinit var adapter : CharacterAdapter
     private lateinit var binding : FragmentMainBinding
-
+    private lateinit var bottomSheet : QueryBottomSheet
 
 
     private var searchJob: Job? = null
@@ -53,15 +58,19 @@ class MainFragment : Fragment() {
         // Make sure we cancel the previous job before creating a new one
         searchJob?.cancel()
         searchJob = lifecycleScope.launch {
-            viewModel.searchRepo(query).collectLatest {
-                adapter.submitData(it)
-            }
+            println("teoooo search")
+            viewModel.searchRepo(query)
+            viewModel.searchRepo(query).observe(viewLifecycleOwner, Observer {
+                adapter.submitData(lifecycle,it)
+            })
+
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         adapter = CharacterAdapter(glide)
+        bottomSheet = QueryBottomSheet()
         enterTransition = MaterialFadeThrough().apply {
             duration = 300
         }
@@ -74,8 +83,23 @@ class MainFragment : Fragment() {
 
         binding.list.layoutManager = GridLayoutManager(activity, Consts.GRID_COUNT)
 
+        viewModel.currentSearchResult?.observe(viewLifecycleOwner, Observer {
+            adapter.submitData(lifecycle,it)
+        })
 
+        //search(null)
         return view
+    }
+
+
+    val characterlistener = object : CharacterAdapter.CharacterAdapterListener{
+        override fun onCharacterClicked(characterBinding: CharacterViewItemBinding, characterModel: CharacterModel) {
+
+            val action = MainFragmentDirections.actionMainFragmentToCharacterFragment(characterModel)
+            val extras = FragmentNavigatorExtras((characterBinding.root to Consts.CHARACTER_CONTAINER_TRANSITION))
+            findNavController().navigate(action, extras)
+
+        }
     }
 
 
@@ -84,19 +108,22 @@ class MainFragment : Fragment() {
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }
 
-        adapter.characterClickListener = object : CharacterAdapter.CharacterAdapterListener{
-            override fun onCharacterClicked(characterBinding: CharacterViewItemBinding, characterModel: CharacterModel) {
+        adapter.characterClickListener = characterlistener
 
-                val action = MainFragmentDirections.actionMainFragmentToCharacterFragment(characterModel)
-                val extras = FragmentNavigatorExtras((characterBinding.root to Consts.CHARACTER_CONTAINER_TRANSITION))
-                findNavController().navigate(action, extras)
 
-            }
+        mainViewModel.query.observe(viewLifecycleOwner, Observer {
+            search(it)
+        })
 
+
+        binding.mainFragmentFab.setOnClickListener {
+            bottomSheet.show(parentFragmentManager,"TTT")
         }
 
+
+
         initAdapter()
-        search(/*CharacterQueryModel(name = "Rick")*/null)
+        //search(null)
         binding.retryButton.setOnClickListener { adapter.retry() }
     }
 
@@ -128,5 +155,7 @@ class MainFragment : Fragment() {
         }
 
     }
+
+
 
 }

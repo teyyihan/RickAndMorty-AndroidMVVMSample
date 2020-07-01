@@ -21,8 +21,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.teyyihan.rickandmorty.model.CharacterGender
-import com.teyyihan.rickandmorty.model.CharacterLifeStatus
 import com.teyyihan.rickandmorty.model.CharacterModel
 
 @Dao

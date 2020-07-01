@@ -4,7 +4,7 @@
 
 
     <!-- Dark theme primary -->
-    <color name="cyan100">#b2ebf2</color>
+    <color name="light_blue_200">#81d4fa</color>
 
     <!-- Light theme primary -->
     <color name="green_800">#2e7d32</color>

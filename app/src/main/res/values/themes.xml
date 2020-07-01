@@ -30,7 +30,7 @@
         <item name="colorOnPrimary">@color/white50</item>
         <item name="colorOnSecondary">@color/grey_900_dark</item>
         <item name="colorOnBackground">@color/grey_900_dark</item>
-        <item name="colorOnSurface">@color/grey_900_dark</item>
+        <item name="colorOnSurface">@color/white50</item>
         <item name="colorOnError">@color/white50</item>
         <!--Material type attributes-->
         <item name="textAppearanceHeadline1">@style/TextAppearance.MaterialComponents.Headline1</item>
@@ -54,7 +54,8 @@
         <!--Component styles-->
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog.Alert</item>
         <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.PrimarySurface</item>
-<!--        <item name="cardViewStyle">@style/Widget.MyTheme.Cardview</item>-->
+        <item name="spinnerStyle">@style/Widget.AppCompat.Spinner</item>
+        <item name="android:spinnerStyle">@style/Widget.AppCompat.Spinner</item>
     </style>
     <style name="Base.Theme.MaterialThemeBuilder" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:statusBarColor" tools:ignore="NewApi">?attr/colorSurface</item>

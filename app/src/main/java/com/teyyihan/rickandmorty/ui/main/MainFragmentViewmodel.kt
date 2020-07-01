@@ -1,6 +1,7 @@
 package com.teyyihan.rickandmorty.ui.main
 
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -18,17 +19,22 @@ class MainFragmentViewmodel @ViewModelInject constructor(
 ) : ViewModel() {
 
 
+    init {
+        searchRepo(null)
+    }
+
     private var currentQueryValue: CharacterQueryModel? = null
 
-    private var currentSearchResult: Flow<PagingData<CharacterModel>>? = null
+    var currentSearchResult: LiveData<PagingData<CharacterModel>>? = null
 
-    fun searchRepo(query: CharacterQueryModel?): Flow<PagingData<CharacterModel>> {
+    fun searchRepo(query: CharacterQueryModel?): LiveData<PagingData<CharacterModel>> {
         val lastResult = currentSearchResult
+        println("teoooo zaten öyleydi  currentQueryValue  "+currentQueryValue +"   query   "+query)
         if (query == currentQueryValue && lastResult != null) {
             return lastResult
         }
         currentQueryValue = query
-        val newResult: Flow<PagingData<CharacterModel>> = repository.getSearchResultStream(query)
+        val newResult = repository.getSearchResultStream(query)
             .cachedIn(viewModelScope)
 
         currentSearchResult = newResult

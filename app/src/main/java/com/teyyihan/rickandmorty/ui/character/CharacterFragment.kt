@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.core.app.SharedElementCallback
 import androidx.navigation.fragment.navArgs
 import androidx.transition.Fade
@@ -15,6 +16,7 @@ import com.google.android.material.transition.platform.MaterialContainerTransfor
 import com.teyyihan.rickandmorty.Consts
 import com.teyyihan.rickandmorty.R
 import com.teyyihan.rickandmorty.databinding.FragmentCharacterBinding
+import com.teyyihan.rickandmorty.ui.main.QueryBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 import javax.inject.Inject
@@ -40,6 +42,13 @@ class CharacterFragment : Fragment() {
         glide.load(args.character?._image).into(binding.characterFragmentImageview)
         binding.characterFragmentNameText.text = args.character?.name
 
+        binding.characterFragmentStatusText.text = args.character?.status
+
+        binding.characterFragmentSpeciesText.text = args.character?.species
+
+        binding.characterFragmentGenderText.text = args.character?.gender
+
+        binding.characterFragmentFromText.text = args.character?.origin?.name
 
         return binding.root
     }

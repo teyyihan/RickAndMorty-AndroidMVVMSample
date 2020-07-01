@@ -24,15 +24,14 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.teyyihan.rickandmorty.data.CharacterRepository
 import com.teyyihan.rickandmorty.model.CharacterModel
+import com.teyyihan.rickandmorty.model.CharacterQueryModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 
-/**
- * ViewModel for the [MainActivity] screen.
- * The ViewModel works with the [CharacterRepository] to get the data.
- */
+
 @ExperimentalCoroutinesApi
 class MainActivityViewModel @ViewModelInject constructor() : ViewModel() {
 
+    val query = MutableLiveData<CharacterQueryModel?>()
 
 }

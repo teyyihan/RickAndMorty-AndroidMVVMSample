@@ -20,14 +20,17 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.teyyihan.rickandmorty.Consts
 import com.teyyihan.rickandmorty.model.CharacterModel
+import com.teyyihan.rickandmorty.model.OriginTypeConverter
 
 @Database(
         entities = [CharacterModel::class],
-        version = 3,
+        version = 4,
         exportSchema = false
 )
+@TypeConverters(OriginTypeConverter::class)
 abstract class MainDatabase : RoomDatabase() {
 
     abstract fun charactersDao(): CharacterDao

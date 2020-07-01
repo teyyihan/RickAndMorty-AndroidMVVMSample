@@ -16,7 +16,7 @@ class CharacterNetworkPaging(
 
         val position = params.key ?: 1
         return try {
-            val response = service.getCharacters(position, query?.name, query?.status?.name,  query?.gender?.name)
+            val response = service.getCharacters(position, query?.name, query?.status,  query?.gender)
             val repos = response.results
             LoadResult.Page(
                 data = repos,

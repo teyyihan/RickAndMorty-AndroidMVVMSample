@@ -15,7 +15,7 @@
        app:layout_constraintEnd_toEndOf="parent"
        app:layout_constraintStart_toStartOf="parent"
        app:layout_constraintTop_toTopOf="parent"
-       tools:ignore="UnusedAttribute"/>
+       tools:ignore="UnusedAttribute" />
 
    <ProgressBar
        android:id="@+id/progress_bar"
@@ -38,6 +38,13 @@
        app:layout_constraintTop_toTopOf="parent"
        app:layout_constraintBottom_toBottomOf="parent"/>
 
-   <include layout="@layout/fab_filter"/>
+   <com.google.android.material.floatingactionbutton.FloatingActionButton
+       android:id="@+id/main_fragment_fab"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       android:layout_margin="25dp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
