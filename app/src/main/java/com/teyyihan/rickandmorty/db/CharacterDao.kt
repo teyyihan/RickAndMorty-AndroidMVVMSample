@@ -24,15 +24,17 @@ import androidx.room.Query
 import com.teyyihan.rickandmorty.model.CharacterModel
 
 @Dao
-interface RepoDao {
+interface CharacterDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(repos: List<CharacterModel>)
 
-    @Query("SELECT * FROM repos")
-    fun reposByName(): PagingSource<Int, CharacterModel>
 
-    @Query("DELETE FROM repos")
-    suspend fun clearRepos()
+    @Query("SELECT * FROM characters")
+    fun getCharacters(): PagingSource<Int, CharacterModel>
+
+
+    @Query("DELETE FROM characters")
+    suspend fun clearCharacters()
 
 }

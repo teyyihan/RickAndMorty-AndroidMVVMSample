@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="colorFillColor" format="color"/>
+    <attr name="colorStrokeColor" format="color"/>
+    <attr name="cardViewColor" format="reference"/>
+</resources>

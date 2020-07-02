@@ -14,20 +14,28 @@
  * limitations under the License.
  */
 
-package com.teyyihan.rickandmorty.ui
+package com.teyyihan.rickandmorty.ui.main
 
 import android.view.ViewGroup
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 
-class ReposLoadStateAdapter(
+/**
+ *  Adapter for header and footer on pagingation recyclerview in MainFragment
+ *  Retry button will trigger to fetch data again
+ */
+class CharactersLoadStateAdapter(
         private val retry: () -> Unit
-) : LoadStateAdapter<ReposLoadStateViewHolder>() {
-    override fun onBindViewHolder(holder: ReposLoadStateViewHolder, loadState: LoadState) {
+) : LoadStateAdapter<CharactersLoadStateViewHolder>() {
+
+    override fun onBindViewHolder(holder: CharactersLoadStateViewHolder, loadState: LoadState) {
         holder.bind(loadState)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): ReposLoadStateViewHolder {
-        return ReposLoadStateViewHolder.create(parent, retry)
+    override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): CharactersLoadStateViewHolder {
+        return CharactersLoadStateViewHolder.create(
+            parent,
+            retry
+        )
     }
 }

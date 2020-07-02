@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#b2ebf2</color>
-    <color name="colorPrimaryDark">#81b9bf</color>
-    <color name="colorPrimaryLight">#e5ffff</color>
 
-    <color name="colorSecondary">#a5d6a7</color>
-    <color name="colorSecondaryDark">#75a478</color>
-    <color name="colorSecondaryLight">#d7ffd9</color>
+
+
+    <!-- Dark theme primary -->
+    <color name="light_blue_200">#81d4fa</color>
+
+    <!-- Light theme primary -->
+    <color name="green_800">#2e7d32</color>
+
+
+    <!-- backgrounds and surfaces -->
+    <color name="grey_900">#212121</color>
+    <color name="grey_900_dark">#000000</color>
+    <color name="grey_900_light">#484848</color>
+
+
+    <!-- Others -->
+    <color name="white50">#ffffff</color>
+    <color name="purple_500">#6200ee</color>
+    <color name="green_200">#03dac6</color>
+    <color name="red_600">#b00020</color>
+    <color name="cyan_400">#26c6da</color>
+    <color name="red_200">#cf6679</color>
 
 </resources>

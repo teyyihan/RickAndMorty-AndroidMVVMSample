@@ -20,23 +20,31 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.teyyihan.rickandmorty.Consts
 import com.teyyihan.rickandmorty.model.CharacterModel
+import com.teyyihan.rickandmorty.model.OriginTypeConverter
 
 @Database(
         entities = [CharacterModel::class],
-        version = 3,
+        version = 4,
         exportSchema = false
 )
-abstract class RepoDatabase : RoomDatabase() {
+@TypeConverters(OriginTypeConverter::class)
+abstract class MainDatabase : RoomDatabase() {
 
-    abstract fun reposDao(): RepoDao
+    abstract fun charactersDao(): CharacterDao
 
+
+    /**
+     *  Will be called from ViewmodelModule DI
+     */
     companion object {
 
         @Volatile
-        private var INSTANCE: RepoDatabase? = null
+        private var INSTANCE: MainDatabase? = null
 
-        fun getInstance(context: Context): RepoDatabase =
+        fun getInstance(context: Context): MainDatabase =
                 INSTANCE ?: synchronized(this) {
                     INSTANCE
                             ?: buildDatabase(context).also { INSTANCE = it }
@@ -44,7 +52,7 @@ abstract class RepoDatabase : RoomDatabase() {
 
         private fun buildDatabase(context: Context) =
                 Room.databaseBuilder(context.applicationContext,
-                        RepoDatabase::class.java, "Github.db")
+                        MainDatabase::class.java, Consts.DATABASE_NAME)
                         .build()
     }
 }

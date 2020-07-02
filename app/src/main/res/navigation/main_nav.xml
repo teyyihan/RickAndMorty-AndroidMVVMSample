@@ -9,5 +9,19 @@
         android:id="@+id/mainFragment"
         android:name="com.teyyihan.rickandmorty.ui.main.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_characterFragment"
+            app:destination="@id/characterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/characterFragment"
+        android:name="com.teyyihan.rickandmorty.ui.character.CharacterFragment"
+        android:label="fragment_character"
+        tools:layout="@layout/fragment_character" >
+        <argument
+            android:name="character"
+            app:argType="com.teyyihan.rickandmorty.model.CharacterModel"
+            app:nullable="true" />
+    </fragment>
 </navigation>

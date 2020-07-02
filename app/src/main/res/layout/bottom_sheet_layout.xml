@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/query_bottomSheet_textInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/search_by_name"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.8"
+        android:layout_margin="25dp"
+        app:boxStrokeColor="?colorPrimary"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:textColorHint="?colorOnBackground">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/query_bottomSheet_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <TextView
+        android:id="@+id/query_bottomSheet_GenderTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gender"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/query_bottomSheet_textInput"
+        android:layout_margin="25dp"/>
+
+    <Spinner
+        android:id="@+id/query_bottomSheet_GenderSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        app:layout_constraintStart_toEndOf="@id/query_bottomSheet_GenderTitle"
+        app:layout_constraintTop_toTopOf="@id/query_bottomSheet_GenderTitle"
+        app:layout_constraintBottom_toBottomOf="@id/query_bottomSheet_GenderTitle"/>
+
+    <TextView
+        android:id="@+id/query_bottomSheet_statusTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/status"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/query_bottomSheet_GenderTitle"
+        android:layout_margin="25dp"/>
+
+    <Spinner
+        android:id="@+id/query_bottomSheet_statusSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        app:layout_constraintStart_toEndOf="@id/query_bottomSheet_GenderTitle"
+        app:layout_constraintTop_toTopOf="@id/query_bottomSheet_statusTitle"
+        app:layout_constraintBottom_toBottomOf="@id/query_bottomSheet_statusTitle"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/query_bottomSheet_queryButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/query"
+        android:textColor="?colorOnPrimary"
+        android:textAllCaps="false"
+        android:layout_marginTop="25dp"
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constraintTop_toBottomOf="@id/query_bottomSheet_statusSpinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0"
+        android:layout_marginBottom="25dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

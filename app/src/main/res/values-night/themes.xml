@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+
+    <!--Top level DayNight theme to be used in AndroidManifest.xml-->
+    <style name="Theme.MyApp" parent="Base.Theme.MyApp">
+        <!--Material color attributes (dark theme) -->
+        <item name="colorPrimary">@color/light_blue_200</item>
+<!--        <item name="colorPrimaryVariant">@color/cyan_400</item>-->
+        <item name="colorSecondary">@color/light_blue_200</item>
+<!--        <item name="colorSecondaryVariant">@color/green_500</item>-->
+        <item name="android:colorBackground">@color/grey_900</item>
+        <item name="colorSurface">@color/grey_900_light</item>
+        <item name="cardViewColor">@color/grey_900_light</item>
+        <item name="colorError">@color/red_200</item>
+        <item name="colorOnPrimary">@color/white50</item>
+        <item name="colorOnSecondary">@color/grey_900_dark</item>
+        <item name="colorOnBackground">@color/white50</item>
+        <item name="colorOnSurface">@color/white50</item>
+        <item name="colorOnError">@color/grey_900_dark</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">false</item>
+
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.MyTheme.Subtitle1</item>
+<!--        <item name="cardViewStyle">@style/Widget.MyTheme.Cardview</item>-->
+    </style>
+
+</resources>

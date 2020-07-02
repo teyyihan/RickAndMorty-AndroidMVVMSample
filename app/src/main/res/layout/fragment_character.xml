@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.character.CharacterFragment"
+    android:background="?android:colorBackground">
+
+
+    <ImageView
+        android:id="@+id/character_fragment_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/character_fragment_nameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name"
+        android:layout_margin="10dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        app:layout_constraintEnd_toStartOf="@id/character_fragment_nameText"
+        app:layout_constraintTop_toBottomOf="@id/character_fragment_imageview"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/character_fragment_nameText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="DENEME"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/character_fragment_nameTitle"
+        app:layout_constraintTop_toTopOf="@id/character_fragment_nameTitle"
+        app:layout_constraintBottom_toBottomOf="@id/character_fragment_nameTitle"
+        app:layout_constraintVertical_bias="0.85"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/character_fragment_statusTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/status"
+        android:layout_margin="10dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        app:layout_constraintEnd_toStartOf="@id/character_fragment_statusText"
+        app:layout_constraintTop_toBottomOf="@id/character_fragment_nameTitle"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/character_fragment_statusText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="DENEME"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/character_fragment_statusTitle"
+        app:layout_constraintBottom_toBottomOf="@id/character_fragment_statusTitle"
+        app:layout_constraintStart_toEndOf="@id/character_fragment_statusTitle"
+        app:layout_constraintVertical_bias="0.85"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/character_fragment_speciesTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/species"
+        android:layout_margin="10dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        app:layout_constraintEnd_toStartOf="@id/character_fragment_speciesText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/character_fragment_statusTitle"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/character_fragment_speciesText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="DENEME"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/character_fragment_speciesTitle"
+        app:layout_constraintBottom_toBottomOf="@id/character_fragment_speciesTitle"
+        app:layout_constraintStart_toEndOf="@id/character_fragment_speciesTitle"
+        app:layout_constraintVertical_bias="0.85"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/character_fragment_genderTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gender"
+        android:layout_margin="10dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        app:layout_constraintEnd_toStartOf="@id/character_fragment_genderText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/character_fragment_speciesTitle"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/character_fragment_genderText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="DENEME"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintTop_toTopOf="@id/character_fragment_genderTitle"
+        app:layout_constraintBottom_toBottomOf="@id/character_fragment_genderTitle"
+        app:layout_constraintStart_toEndOf="@id/character_fragment_genderTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.85"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/character_fragment_fromTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/from"
+        android:layout_margin="10dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        app:layout_constraintEnd_toStartOf="@id/character_fragment_fromText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/character_fragment_genderTitle" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/character_fragment_fromText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="DENEME"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintTop_toTopOf="@id/character_fragment_fromTitle"
+        app:layout_constraintBottom_toBottomOf="@id/character_fragment_fromTitle"
+        app:layout_constraintStart_toEndOf="@id/character_fragment_fromTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.85"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

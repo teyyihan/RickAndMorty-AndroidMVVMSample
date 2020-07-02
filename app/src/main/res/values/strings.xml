@@ -1,5 +1,34 @@
 <resources>
     <string name="app_name">RickAndMorty</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search">Search</string>
+    <string name="light_theme">Light Theme</string>
+    <string name="dark_theme">Dark theme</string>
+    <string name="system_default">System default</string>
+
+    <string name="character_transition_container">character_transition_container_%1$s</string>
+    <string name="name">Name:</string>
+    <string name="status">Status:</string>
+    <string name="species">Species:</string>
+    <string name="gender">Gender:</string>
+    <string name="from">From:</string>
+    <string name="query">Query</string>
+    <string name="search_by_name">Search by name...</string>
+    <string name="retry">Retry</string>
+
+    <string-array name="gender_spinner">
+        <item>All</item>
+        <item>Female</item>
+        <item>Male</item>
+        <item>Genderless</item>
+        <item>Unknown</item>
+    </string-array>
+
+    <string-array name="status_spinner">
+        <item>All</item>
+        <item>Alive</item>
+        <item>Dead</item>
+        <item>Unknown</item>
+    </string-array>
+
 </resources>

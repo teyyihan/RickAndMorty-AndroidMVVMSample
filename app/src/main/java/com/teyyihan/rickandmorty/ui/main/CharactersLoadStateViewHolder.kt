@@ -14,19 +14,22 @@
  * limitations under the License.
  */
 
-package com.teyyihan.rickandmorty.ui
+package com.teyyihan.rickandmorty.ui.main
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import com.teyyihan.rickandmorty.R
-import com.teyyihan.rickandmorty.databinding.ReposLoadStateFooterViewItemBinding
+import com.teyyihan.rickandmorty.databinding.CharactersLoadStateFooterViewItemBinding
 
-class ReposLoadStateViewHolder(
-    private val binding: ReposLoadStateFooterViewItemBinding,
+/**
+ *  ViewHolder for header and footer on pagingation recyclerview in MainFragment
+ *  Retry button will trigger to fetch data again
+ */
+class CharactersLoadStateViewHolder(
+    private val binding: CharactersLoadStateFooterViewItemBinding,
     retry: () -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -38,17 +41,20 @@ class ReposLoadStateViewHolder(
         if (loadState is LoadState.Error) {
             binding.errorMsg.text = loadState.error.localizedMessage
         }
-        binding.progressBar.isVisible = loadState is LoadState.Loading
+        binding.progressBarFooter.isVisible = loadState is LoadState.Loading
         binding.retryButton.isVisible = loadState !is LoadState.Loading
         binding.errorMsg.isVisible = loadState !is LoadState.Loading
     }
 
     companion object {
-        fun create(parent: ViewGroup, retry: () -> Unit): ReposLoadStateViewHolder {
+        fun create(parent: ViewGroup, retry: () -> Unit): CharactersLoadStateViewHolder {
             val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.repos_load_state_footer_view_item, parent, false)
-            val binding = ReposLoadStateFooterViewItemBinding.bind(view)
-            return ReposLoadStateViewHolder(binding, retry)
+                    .inflate(R.layout.characters_load_state_footer_view_item, parent, false)
+            val binding = CharactersLoadStateFooterViewItemBinding.bind(view)
+            return CharactersLoadStateViewHolder(
+                binding,
+                retry
+            )
         }
     }
 }
