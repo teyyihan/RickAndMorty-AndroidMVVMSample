@@ -1,11 +1,9 @@
 package com.teyyihan.rickandmorty.ui.main
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
@@ -21,19 +19,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.RequestManager
 import com.google.android.material.transition.MaterialFadeThrough
 import com.teyyihan.rickandmorty.Consts
-import com.teyyihan.rickandmorty.R
 import com.teyyihan.rickandmorty.databinding.CharacterViewItemBinding
 import com.teyyihan.rickandmorty.databinding.FragmentMainBinding
 import com.teyyihan.rickandmorty.model.CharacterModel
 import com.teyyihan.rickandmorty.model.CharacterQueryModel
-import com.teyyihan.rickandmorty.ui.MainActivity
 import com.teyyihan.rickandmorty.ui.MainActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -58,9 +51,7 @@ class MainFragment : Fragment(){
         // Make sure we cancel the previous job before creating a new one
         searchJob?.cancel()
         searchJob = lifecycleScope.launch {
-            println("teoooo search")
-            viewModel.searchRepo(query)
-            viewModel.searchRepo(query).observe(viewLifecycleOwner, Observer {
+            viewModel.searchCharacter(query).observe(viewLifecycleOwner, Observer {
                 adapter.submitData(lifecycle,it)
             })
 
@@ -70,7 +61,9 @@ class MainFragment : Fragment(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         adapter = CharacterAdapter(glide)
+        // Bottom sheet for querying
         bottomSheet = QueryBottomSheet()
+        // Material transition
         enterTransition = MaterialFadeThrough().apply {
             duration = 300
         }
@@ -83,15 +76,17 @@ class MainFragment : Fragment(){
 
         binding.list.layoutManager = GridLayoutManager(activity, Consts.GRID_COUNT)
 
+        // Listen for pagination changes and submit them into recyclerview
         viewModel.currentSearchResult?.observe(viewLifecycleOwner, Observer {
             adapter.submitData(lifecycle,it)
         })
 
-        //search(null)
         return view
     }
 
-
+    /**
+     *  Listener for cardview clicks. Navigates to CharacterFragment with transition
+     */
     val characterlistener = object : CharacterAdapter.CharacterAdapterListener{
         override fun onCharacterClicked(characterBinding: CharacterViewItemBinding, characterModel: CharacterModel) {
 
@@ -108,14 +103,15 @@ class MainFragment : Fragment(){
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }
 
+        // Set recyclerview click listener
         adapter.characterClickListener = characterlistener
 
-
+        // If query changes, trigger the search flow
         mainViewModel.query.observe(viewLifecycleOwner, Observer {
             search(it)
         })
 
-
+        // Show query bottomsheet
         binding.mainFragmentFab.setOnClickListener {
             bottomSheet.show(parentFragmentManager,"TTT")
         }
@@ -123,17 +119,22 @@ class MainFragment : Fragment(){
 
 
         initAdapter()
-        //search(null)
+
         binding.retryButton.setOnClickListener { adapter.retry() }
     }
 
 
     private fun initAdapter() {
+
+        // Set footer and headers. This is optional
         binding.list.adapter = adapter.withLoadStateHeaderAndFooter(
                 header = CharactersLoadStateAdapter { adapter.retry() },
                 footer = CharactersLoadStateAdapter { adapter.retry() }
         )
 
+        /**
+         *  This is straight from codelab LOL =>  https://codelabs.developers.google.com/codelabs/android-paging/#10
+         */
 
         adapter.addLoadStateListener { loadState ->
             // Only show the list if refresh succeeds.

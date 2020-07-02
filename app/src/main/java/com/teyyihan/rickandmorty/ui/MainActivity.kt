@@ -19,6 +19,7 @@ package com.teyyihan.rickandmorty.ui
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -47,10 +48,13 @@ class MainActivity : AppCompatActivity(), QueryBottomSheet.BottomSheetListener {
         val view = binding.root
         setContentView(view)
 
-        setSupportActionBar(binding.mainFragmentToolbar)
+        setSupportActionBar(binding.mainActivityToolbar)
 
+        /**
+         *  Dark and Light modes are following system default.
+         *  Manual selection will be implemented in further versions via toolbar menu
+         */
         delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-
 
     }
 
@@ -60,7 +64,16 @@ class MainActivity : AppCompatActivity(), QueryBottomSheet.BottomSheetListener {
         return true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        Toast.makeText(applicationContext,"Will be implemented",Toast.LENGTH_SHORT).show()
+        return super.onOptionsItemSelected(item)
+    }
+
+    /**
+     *  Interface - Listener mechanism for passing bottom sheet query data. Shared Viewmodels also can be used.
+     */
     override fun queryButtonClicked(query: CharacterQueryModel?) {
+        // Set shared viewmodel variable value to new query. It will be listened from main fragment
         mainViewmodel.query.postValue(query)
     }
 

@@ -23,10 +23,15 @@ class CharacterRepository(
 
     fun getSearchResultStream(query: CharacterQueryModel?): LiveData<PagingData<CharacterModel>> {
 
-
+        /**
+         *  Truth source for displaying data from database.
+         *  Notice that this reference doesn't be used on listing with query.
+         *  Because listing with query doesn't cache data
+         */
         val pagingSourceFactory = { database.charactersDao().getCharacters() }
 
-        return if (query == null) {                         // Normal listing
+        // Normal listing, without any query
+        return if (query == null) {
             Pager(
                 config = PagingConfig(pageSize = NETWORK_PAGE_SIZE),
                 remoteMediator = CharacterRemoteMediator(
@@ -35,7 +40,9 @@ class CharacterRepository(
                 ),
                 pagingSourceFactory = pagingSourceFactory
             ).liveData
-        } else {                                            // Filtering
+        }
+        // Listing with a given query
+        else {                                            // Filtering
             Pager(
                 config = PagingConfig(pageSize = NETWORK_PAGE_SIZE),
                 pagingSourceFactory = { CharacterNetworkPaging(service, query) }

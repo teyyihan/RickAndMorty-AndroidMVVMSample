@@ -5,7 +5,7 @@
     <!--Top level DayNight theme to be used in AndroidManifest.xml-->
     <style name="Theme.MyApp" parent="Base.Theme.MyApp">
         <!--Material color attributes (dark theme) -->
-        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimary">@color/light_blue_200</item>
 <!--        <item name="colorPrimaryVariant">@color/cyan_400</item>-->
         <item name="colorSecondary">@color/light_blue_200</item>
 <!--        <item name="colorSecondaryVariant">@color/green_500</item>-->

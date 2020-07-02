@@ -10,8 +10,6 @@ import com.teyyihan.rickandmorty.data.CharacterRepository
 import com.teyyihan.rickandmorty.model.CharacterModel
 import com.teyyihan.rickandmorty.model.CharacterQueryModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class MainFragmentViewmodel @ViewModelInject constructor(
@@ -20,21 +18,24 @@ class MainFragmentViewmodel @ViewModelInject constructor(
 
 
     init {
-        searchRepo(null)
+        // Initial
+        searchCharacter(null)
     }
 
     private var currentQueryValue: CharacterQueryModel? = null
 
     var currentSearchResult: LiveData<PagingData<CharacterModel>>? = null
 
-    fun searchRepo(query: CharacterQueryModel?): LiveData<PagingData<CharacterModel>> {
+    fun searchCharacter(query: CharacterQueryModel?): LiveData<PagingData<CharacterModel>> {
         val lastResult = currentSearchResult
-        println("teoooo zaten öyleydi  currentQueryValue  "+currentQueryValue +"   query   "+query)
+
+        // If the query is the same, just send the old result
         if (query == currentQueryValue && lastResult != null) {
             return lastResult
         }
         currentQueryValue = query
         val newResult = repository.getSearchResultStream(query)
+            // Cached in viewmodel. When viewmodel dies, data will be lost
             .cachedIn(viewModelScope)
 
         currentSearchResult = newResult

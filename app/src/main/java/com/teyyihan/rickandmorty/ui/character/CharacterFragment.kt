@@ -25,29 +25,35 @@ import javax.inject.Inject
 class CharacterFragment : Fragment() {
 
     private lateinit var binding : FragmentCharacterBinding
+    /**
+     *  Collect the incoming Safe-Args data. This includes character info.
+     */
     private val args: CharacterFragmentArgs by navArgs()
+
+    /**
+     * Injected via AppModule. For better memory optimization this can be placed under FragmentModule
+     */
     @Inject
     lateinit var glide : RequestManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Shared material container transition from MainFragment to here
         sharedElementEnterTransition = MaterialContainerTransform().setDuration(300)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentCharacterBinding.inflate(inflater, container, false)
 
+        // Set the transition name to avoid runtime IllegalStateException
         binding.root.transitionName = Consts.CHARACTER_CONTAINER_TRANSITION
 
+        // Display character info
         glide.load(args.character?._image).into(binding.characterFragmentImageview)
         binding.characterFragmentNameText.text = args.character?.name
-
         binding.characterFragmentStatusText.text = args.character?.status
-
         binding.characterFragmentSpeciesText.text = args.character?.species
-
         binding.characterFragmentGenderText.text = args.character?.gender
-
         binding.characterFragmentFromText.text = args.character?.origin?.name
 
         return binding.root

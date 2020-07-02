@@ -24,6 +24,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.teyyihan.rickandmorty.R
 import com.teyyihan.rickandmorty.databinding.CharactersLoadStateFooterViewItemBinding
 
+/**
+ *  ViewHolder for header and footer on pagingation recyclerview in MainFragment
+ *  Retry button will trigger to fetch data again
+ */
 class CharactersLoadStateViewHolder(
     private val binding: CharactersLoadStateFooterViewItemBinding,
     retry: () -> Unit

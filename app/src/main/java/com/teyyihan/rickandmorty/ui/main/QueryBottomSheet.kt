@@ -17,13 +17,19 @@ import java.lang.ClassCastException
 import java.lang.Exception
 import javax.inject.Inject
 
+/**
+ * Query bottom sheet
+ */
+
 class QueryBottomSheet : BottomSheetDialogFragment() {
 
     var mListener: BottomSheetListener? = null
-    private var nameQuery : String? = null
     private var statusQuery : String? = null
     private var genderQuery : String? = null
 
+    /**
+     *  Interface-Listener for search button in bottom sheet
+     */
     interface BottomSheetListener{
         fun queryButtonClicked(query : CharacterQueryModel?)
     }
@@ -31,13 +37,14 @@ class QueryBottomSheet : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = BottomSheetLayoutBinding.inflate(inflater,container,false)
 
+        // Init spinners for gender and status
+
         context?.let {
             ArrayAdapter.createFromResource(it, R.array.status_spinner, android.R.layout.simple_spinner_item).also { adapter ->
 
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 binding.queryBottomSheetStatusSpinner.adapter = adapter
             }
-
             ArrayAdapter.createFromResource(it, R.array.gender_spinner, android.R.layout.simple_spinner_item).also { adapter ->
 
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -45,8 +52,8 @@ class QueryBottomSheet : BottomSheetDialogFragment() {
             }
         }
 
+        // Click listener for search button
         binding.queryBottomSheetQueryButton.setOnClickListener {
-
             statusQuery = findStatus(binding.queryBottomSheetStatusSpinner.selectedItemId)
             genderQuery = findGender(binding.queryBottomSheetGenderSpinner.selectedItemId)
 
@@ -57,6 +64,7 @@ class QueryBottomSheet : BottomSheetDialogFragment() {
                     genderQuery
                 )
             )
+            // after clicking search button, close bottom sheet
             dismiss()
         }
 
@@ -102,6 +110,7 @@ class QueryBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
+    // Attach main activity to search button listener
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mListener = context as BottomSheetListener

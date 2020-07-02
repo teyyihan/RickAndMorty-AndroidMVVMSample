@@ -2,6 +2,11 @@ package com.teyyihan.rickandmorty.model
 
 import androidx.room.TypeConverter
 
+/**
+ *  Can't store custom objects within a entity without a type converter.
+ *  We need to store where character is from.
+ */
+
 class OriginTypeConverter {
 
     @TypeConverter

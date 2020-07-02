@@ -20,9 +20,14 @@ import android.view.ViewGroup
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 
+/**
+ *  Adapter for header and footer on pagingation recyclerview in MainFragment
+ *  Retry button will trigger to fetch data again
+ */
 class CharactersLoadStateAdapter(
         private val retry: () -> Unit
 ) : LoadStateAdapter<CharactersLoadStateViewHolder>() {
+
     override fun onBindViewHolder(holder: CharactersLoadStateViewHolder, loadState: LoadState) {
         holder.bind(loadState)
     }

@@ -38,15 +38,9 @@
             android:layout_height="match_parent">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/main_fragment_toolbar"
+                android:id="@+id/main_activity_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
-
-            <com.miguelcatalan.materialsearchview.MaterialSearchView
-                android:id="@+id/search_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="visible" />
 
         </FrameLayout>
 

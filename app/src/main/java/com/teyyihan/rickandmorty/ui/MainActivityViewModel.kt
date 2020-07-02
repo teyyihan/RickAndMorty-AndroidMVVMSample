@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.Flow
 @ExperimentalCoroutinesApi
 class MainActivityViewModel @ViewModelInject constructor() : ViewModel() {
 
+    // Shared livedata to be set from main activity and be listened from main fragment
     val query = MutableLiveData<CharacterQueryModel?>()
 
 }

@@ -13,6 +13,8 @@
     <string name="gender">Gender:</string>
     <string name="from">From:</string>
     <string name="query">Query</string>
+    <string name="search_by_name">Search by name...</string>
+    <string name="retry">Retry</string>
 
     <string-array name="gender_spinner">
         <item>All</item>

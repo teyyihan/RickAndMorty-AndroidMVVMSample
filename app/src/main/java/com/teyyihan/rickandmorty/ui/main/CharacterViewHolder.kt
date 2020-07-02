@@ -21,6 +21,7 @@ class CharacterViewHolder @Inject constructor(
     private var character : CharacterModel? = null
 
 
+    // If character is not null, display it
     fun bind(character: CharacterModel?) {
         if (character != null) {
             showRepoData(character)

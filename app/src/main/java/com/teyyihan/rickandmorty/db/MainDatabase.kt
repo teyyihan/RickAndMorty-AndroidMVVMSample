@@ -35,6 +35,10 @@ abstract class MainDatabase : RoomDatabase() {
 
     abstract fun charactersDao(): CharacterDao
 
+
+    /**
+     *  Will be called from ViewmodelModule DI
+     */
     companion object {
 
         @Volatile

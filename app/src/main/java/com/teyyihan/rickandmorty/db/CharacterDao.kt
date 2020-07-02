@@ -34,7 +34,6 @@ interface CharacterDao {
     fun getCharacters(): PagingSource<Int, CharacterModel>
 
 
-
     @Query("DELETE FROM characters")
     suspend fun clearCharacters()
 
